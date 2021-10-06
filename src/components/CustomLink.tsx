@@ -9,7 +9,6 @@ const CustomLink = ({ children, to }) => {
         textDecoration: "none",
         color: "#303030",
       }}
-      activeStyle={{ color: "red" }}
     >
       {children}
     </NavLink>

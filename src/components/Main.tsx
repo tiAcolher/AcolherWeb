@@ -16,6 +16,7 @@ import {
   Divider,
   Avatar,
 } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 
 import ParticipanteIcon from "@material-ui/icons/Person";
 import RelatorioIcon from "@material-ui/icons/Description";
@@ -26,9 +27,10 @@ import ProjetosIcon from "@material-ui/icons/Edit";
 import SegurancaIcon from "@material-ui/icons/Lock";
 import CustomLink from "./CustomLink";
 
+
 const Main = () => {
   const handleLogout = () => {
-    alert("Logout");
+    alert("Logout Realizado");
   };
 
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -53,19 +55,36 @@ const Main = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Projeto Acolher
+            <NavLink
+              to="/home"
+              style={{
+                textDecoration: "none",
+                color: "#FFF",
+              }}
+            >
+              Projeto Acolher
+            </NavLink>
           </Typography>
-          <Button color="inherit" onClick={handleLogout}>
-            Sair
-          </Button>
+          <img src='http://acolhendo.org.br/resources/oie_transparent.png.opt302x389o0%2C0s302x389.png' width="3%"  alt="" /> 
+          <NavLink
+            to="/"
+            style={{
+              textDecoration: "none",
+              color: "#FFF",
+            }}
+          >            
+            <Button color="inherit" onClick={handleLogout}>
+              Sair
+            </Button>
+          </NavLink>
         </Toolbar>
       </AppBar>
 
       <Drawer anchor="left" open={isDrawerVisible} onClose={toggleMenu}>
-        <CardHeader avatar={<Avatar />} title={"Filipinho"} />
+        <CardHeader avatar={<Avatar />} title='Admin'/>
         <Divider />
         <List>
-          <CustomLink to="/list">
+          <CustomLink to="/partnerList">
             <ListItem button>
               <ListItemIcon>
                 <ParticipanteIcon />
