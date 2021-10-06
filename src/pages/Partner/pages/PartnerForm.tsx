@@ -1,13 +1,15 @@
 import React from "react";
-import { DadosPessoais } from "./dadosPessoais";
-import { RespFamilia } from "./respFamilia";
-import { Saude } from "./saude";
-import { PesquisaSocial } from "./pesquisaSocial";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+
+import { DadosPessoais } from "../components/personalData";
+import { RespFamilia } from "../components/familyData";
+import { Saude } from "../components/health";
+import { PesquisaSocial } from "../components/socialResearch";
+import Main from "../../../components/Main";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -57,6 +59,7 @@ const PartnerForm = (): JSX.Element => {
   };
   return (
     <div>
+      <Main />
       <Tabs
         orientation="horizontal"
         variant="standard"

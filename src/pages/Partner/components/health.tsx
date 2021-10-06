@@ -7,7 +7,13 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import * as React from "react";
-import { boleano, necsEspecs, fatorRH, localAcomp, freqAcomp } from "../jsons";
+import {
+  boleano,
+  necsEspecs,
+  fatorRH,
+  localAcomp,
+  freqAcomp,
+} from "../../jsons";
 import { TextField } from "@material-ui/core";
 
 interface Values {

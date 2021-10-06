@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -13,12 +13,14 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EditIcon from "@material-ui/icons/Edit";
+import { useHistory } from "react-router-dom";
 
+import Main from "../../../components/Main";
 
 const PartnerList = (): JSX.Element => {
   const classes = useStyles();
 
-  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const mockPartnerList = [
     {
       name: "Marcela",
@@ -31,19 +33,19 @@ const PartnerList = (): JSX.Element => {
       phone: "66 6666-6666",
       parent: "ciclano",
       parentPhone: "77 7777-7777",
-    },    
+    },
     {
       name: "Felipe",
       phone: "55 5555-5555",
       parent: "beltrano",
       parentPhone: "44 4444-4444",
-    },    
+    },
     {
       name: "Maria",
       phone: "11 2222-2222",
       parent: "fulano",
       parentPhone: "33 3333-3333",
-    },    
+    },
     {
       name: "Juliana",
       phone: "11 9999-9999",
@@ -52,44 +54,70 @@ const PartnerList = (): JSX.Element => {
     },
   ];
 
+  const history = useHistory();
+
+  const [search, setSearch] = React.useState("");
+  const [list, setList] = React.useState(mockPartnerList);
+
+  useEffect(() => {
+    if (search !== "") {
+      let newList = mockPartnerList.filter((item) =>
+        item.name.toUpperCase().includes(search.toUpperCase())
+      );
+      setList(newList);
+    } else {
+      setList(mockPartnerList);
+    }
+  }, [search]);
+
   return (
-    <div className={classes.container}>
-      <div className={classes.search}>
-        <div className={classes.searchIcon}>
-          <SearchIcon />
-        </div>        
-        <InputBase
-          fullWidth
-          placeholder="Procurar…"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          inputProps={{ "aria-label": "search" }}
+    <div>
+      <Main />
+      <div className={classes.container}>
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setSearch(event.target.value);
+            }}
+            fullWidth
+            placeholder="Procurar…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ "aria-label": "search" }}
+          />
+        </div>
+
+        <PersonAddIcon
+          onClick={() => history.push("createPartner")}
+          className={classes.addButton}
         />
-      </div>      
-      <PersonAddIcon  className={classes.addButton}  />
-      <List style={{ marginTop: 32 }}>
-        {mockPartnerList.map((partner) => (
-          <Card className={classes.card}>
-            <Box display="flex">
-              <Avatar className={classes.avatar} />
-              <Box className={classes.cardContent}>
-                <Typography>Nome: {partner?.name}</Typography>
-                <Typography>Telefone: {partner?.phone}</Typography>
-                <Typography>Responsável: {partner?.parent}</Typography>
-                <Typography>
-                  Telefone do Responsável: {partner?.parentPhone}
-                </Typography>
+        <List style={{ marginTop: 32 }}>
+          {list.map((partner) => (
+            <Card className={classes.card}>
+              <Box display="flex">
+                <Avatar className={classes.avatar} />
+                <Box className={classes.cardContent}>
+                  <Typography>Nome: {partner?.name}</Typography>
+                  <Typography>Telefone: {partner?.phone}</Typography>
+                  <Typography>Responsável: {partner?.parent}</Typography>
+                  <Typography>
+                    Telefone do Responsável: {partner?.parentPhone}
+                  </Typography>
+                </Box>
+                <div className={classes.buttons}>
+                  <EditIcon className={classes.EditIcon} />
+                </div>
               </Box>
-              <div className={classes.buttons}>
-                <EditIcon className={classes.EditIcon} />
-              </div>
-            </Box>
-          </Card>
-        ))}
-      </List>
-   </div>
+            </Card>
+          ))}
+        </List>
+      </div>
+    </div>
   );
 };
 
@@ -114,7 +142,7 @@ const useStyles = makeStyles((theme: Theme) =>
     addButton: {
       width: 50,
       height: 40,
-      marginLeft: "93%",      
+      marginLeft: "93%",
       position: "absolute",
       marginTop: "-2.3%",
       cursor: "pointer",

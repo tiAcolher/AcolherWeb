@@ -1,7 +1,13 @@
-import { Button, createStyles, makeStyles, MenuItem, Theme } from "@material-ui/core";
+import {
+  Button,
+  createStyles,
+  makeStyles,
+  MenuItem,
+  Theme,
+} from "@material-ui/core";
 import { Form, Formik } from "formik";
 import * as React from "react";
-import { boleano,chefeFamilia,domicilio } from "../jsons";
+import { boleano, chefeFamilia, domicilio } from "../../jsons";
 import { TextField } from "@material-ui/core";
 
 interface Values {
@@ -46,24 +52,23 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
   const [sitDomi, setsitDomi] = React.useState("");
   const [chefeFami, setchefeFami] = React.useState("");
 
-
-  const handleChangeeltrecidade = (event: React.ChangeEvent<HTMLInputElement>) => {
-    seteltrecidade(event.target.value);
-  };
-  const handleChangeesgoto = (
+  const handleChangeeltrecidade = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    seteltrecidade(event.target.value);
+  };
+  const handleChangeesgoto = (event: React.ChangeEvent<HTMLInputElement>) => {
     setesgoto(event.target.value);
   };
   const handleChangeasfalto = (event: React.ChangeEvent<HTMLInputElement>) => {
     setasfalto(event.target.value);
   };
-  const handleChangeencanamento = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setencanamento(event.target.value);
-  };
-  const handleChangeservicos = (
+  const handleChangeencanamento = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setencanamento(event.target.value);
+  };
+  const handleChangeservicos = (event: React.ChangeEvent<HTMLInputElement>) => {
     setservicos(event.target.value);
   };
   const handleChangebolsaAtu = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,26 +77,32 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
   const handleChangebolsaPas = (event: React.ChangeEvent<HTMLInputElement>) => {
     setbolsaPas(event.target.value);
   };
-  const handleChangetrabAdolesc = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangetrabAdolesc = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setTrabAdolesc(event.target.value);
   };
 
-  const handleChangebeneficio = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangebeneficio = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setbeneficio(event.target.value);
   };
 
   const handleChangepesDefi = (event: React.ChangeEvent<HTMLInputElement>) => {
     setpesDefi(event.target.value);
   };
-  const handleChangeinternet = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeinternet = (event: React.ChangeEvent<HTMLInputElement>) => {
     setinternet(event.target.value);
   };
-  const handleChangecomputador = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangecomputador = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setcomputador(event.target.value);
   };
-  const handleChangecriAdoCel = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangecriAdoCel = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setcriAdoCel(event.target.value);
   };
   const handleChangecriAdoInt = (
@@ -102,7 +113,9 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
   const handleChangesitDomi = (event: React.ChangeEvent<HTMLInputElement>) => {
     setsitDomi(event.target.value);
   };
-  const handleChangechefeFami = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangechefeFami = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setchefeFami(event.target.value);
   };
   return (
@@ -137,7 +150,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.moradia}
               name="moradia"
               label="Situação do Domicilio de Moradia"
-                                      select
+              select
               value={sitDomi}
               onChange={handleChangesitDomi}
             >
@@ -168,7 +181,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.redeEsgoto}
               name="redeEsgoto"
               label="Rede de Esgoto ?"
-                          select
+              select
               value={esgoto}
               onChange={handleChangeesgoto}
             >
@@ -183,7 +196,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.ruaAsfaltada}
               name="ruaAsfaltada"
               label="Rua Asfaltada ?"
-                          select
+              select
               value={asfalto}
               onChange={handleChangeasfalto}
             >
@@ -198,7 +211,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.aguaEnc}
               name="aguaEnc"
               label="Água Encanada ?"
-                          select
+              select
               value={encanamento}
               onChange={handleChangeencanamento}
             >
@@ -213,7 +226,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.redeServ}
               name="redeServ"
               label="Rede de Serviços ?"
-                          select
+              select
               value={servicos}
               onChange={handleChangeservicos}
             >
@@ -229,7 +242,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.expTrbAdo}
               name="expTrbAdo"
               label="Experiência de Trabalho Adolescente ?"
-                          select
+              select
               value={trabAdolesc}
               onChange={handleChangetrabAdolesc}
             >
@@ -245,7 +258,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.bolsaFamiliaAtu}
               name="bolsaFamiliaAtu"
               label="Possui Bolsa Família Atualmente ?"
-                          select
+              select
               value={bolsaAtu}
               onChange={handleChangebolsaAtu}
             >
@@ -260,7 +273,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.bolsaFamiliaPas}
               name="bolsaFamiliaPas"
               label="Já possuiu Bolsa Família ?"
-                          select
+              select
               value={bolsaPas}
               onChange={handleChangebolsaPas}
             >
@@ -275,7 +288,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.outroBen}
               name="outroBen"
               label="Possui Outro Benefício ?"
-                          select
+              select
               value={beneficio}
               onChange={handleChangebeneficio}
             >
@@ -290,7 +303,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.chefeFam}
               name="chefeFam"
               label="Chefe da Familia"
-                                      select
+              select
               value={chefeFami}
               onChange={handleChangechefeFami}
             >
@@ -306,7 +319,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.pessoasDef}
               name="pessoasDef"
               label="Pessoas com deficiência"
-                          select
+              select
               value={pesDefi}
               onChange={handleChangepesDefi}
             >
@@ -334,7 +347,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.internet}
               name="internet"
               label="Possui Internet Banda Larga ?"
-                          select
+              select
               value={internet}
               onChange={handleChangeinternet}
             >
@@ -350,7 +363,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.computador}
               name="computador"
               label="Possui Computador ?"
-                          select
+              select
               value={computador}
               onChange={handleChangecomputador}
             >
@@ -365,7 +378,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.celCriAdo}
               name="celCriAdo"
               label="Criança/Adolescente com Celular ?"
-                          select
+              select
               value={criAdoCel}
               onChange={handleChangecriAdoCel}
             >
@@ -380,7 +393,7 @@ export const PesquisaSocial: React.FC<Props> = ({ onSubmit }) => {
               className={classes.intCriAdo}
               name="intCriAdo"
               label="Criança/Adolescente com Internet Móvel ?"
-                          select
+              select
               value={criAdoInt}
               onChange={handleChangecriAdoInt}
             >
@@ -442,7 +455,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     redeServ: {
       width: "21%",
-      
+
       marginTop: "3%",
     },
     expTrbAdo: {

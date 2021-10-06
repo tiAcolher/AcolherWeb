@@ -17,7 +17,7 @@ import {
   series,
   situacoes,
   locomocao,
-} from "../jsons";
+} from "../../jsons";
 
 interface Values {
   nome: string;

@@ -8,7 +8,7 @@ import {
 import { Form, Formik } from "formik";
 import * as React from "react";
 import { TextField } from "@material-ui/core";
-import { boleano,paisVivos,registroDeGuarda } from "../jsons";
+import { boleano, paisVivos, registroDeGuarda } from "../../jsons";
 
 interface Values {
   nome: string;
@@ -50,7 +50,7 @@ export const RespFamilia: React.FC<Props> = ({ onSubmit }) => {
   const handleChangePensao = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPensao(event.target.value);
   };
-    const handleChangeRegistro = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRegistro = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRegistro(event.target.value);
   };
 
@@ -169,7 +169,7 @@ export const RespFamilia: React.FC<Props> = ({ onSubmit }) => {
               name="justificativa"
               label="Justificativa"
             />
-            
+
             <TextField
               className={classes.respLegal}
               name="respLegal"
@@ -196,7 +196,7 @@ export const RespFamilia: React.FC<Props> = ({ onSubmit }) => {
               className={classes.registroGuarda}
               name="registroGuarda"
               label="Registro de Guarda"
-                          select
+              select
               value={Registro}
               onChange={handleChangeRegistro}
             >
@@ -248,7 +248,7 @@ const useStyles = makeStyles((theme: Theme) =>
     mae: {
       width: "80%",
     },
-    dt_nascMae: { marginTop: "3%", width:"17%" },
+    dt_nascMae: { marginTop: "3%", width: "17%" },
     profissaoMae: {
       marginLeft: "2%",
       marginTop: "3%",
@@ -260,7 +260,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "80%",
       marginTop: "3%",
     },
-    dt_nascPai: { marginTop: "3%",width:"17%" },
+    dt_nascPai: { marginTop: "3%", width: "17%" },
     profissaoPai: {
       marginLeft: "2%",
       marginTop: "3%",
@@ -290,7 +290,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     dt_nascResp: {
       marginTop: "3%",
-      width:"17%"
+      width: "17%",
     },
     grauParentesco: {
       width: "30%",
