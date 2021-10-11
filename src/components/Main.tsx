@@ -93,12 +93,12 @@ const Main = () => {
             </ListItem>
           </CustomLink>
 
-          <ListItem button>
+          {/* <ListItem button>
             <ListItemIcon>
               <FederadosIcon />
             </ListItemIcon>
             <ListItemText primary="Federados" />
-          </ListItem>
+          </ListItem> */}
 
           <ListItem button>
             <ListItemIcon>

@@ -13,7 +13,7 @@ const Home = (): JSX.Element => {
       <img src={faixa} width="100%" alt="" />
       <Grid className={classes.container}>
         <Button className={classes.buttons} variant='contained'  onClick={() => history.push("/partnerList")} >Participantes</Button>        
-        <Button className={classes.buttons} variant='contained' >Federados</Button>
+        {/* <Button className={classes.buttons} variant='contained' >Federados</Button> */}
         <Button className={classes.buttons} variant='contained'>Atividades</Button>
         <Button className={classes.buttons} variant='contained'>Projetos</Button>
         <Button className={classes.buttons} variant='contained'>Doações</Button>

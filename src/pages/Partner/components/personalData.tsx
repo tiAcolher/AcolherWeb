@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import * as React from "react";
-import { TextField } from "@material-ui/core";
+import { TextField,FormControlLabel,Checkbox } from "@material-ui/core";
 import InputMask from "react-input-mask";
 import {
   estados,
@@ -41,6 +41,7 @@ interface Values {
 interface Props {
   onSubmit: (values: Values) => void;
 }
+
 
 export const DadosPessoais: React.FC<Props> = ({ onSubmit }) => {
   const classes = useStyles();
@@ -151,8 +152,35 @@ export const DadosPessoais: React.FC<Props> = ({ onSubmit }) => {
               )}
             </InputMask>
           </div>
-          <p>Endereço</p>
+
+          <div>            
+          <label >Atleta Federado :<input className={classes.federado} type="checkbox" />
+            </label>
+            <p>Dados Federados</p>
+                        <TextField disabled
+              className={classes.clube}
+              name="clube"
+              label="Nome do Clube"
+          />
+          <TextField disabled
+              className={classes.modalidade}
+              name="modalidade"
+            label="Modalidade Esportiva"
+            />
+            <TextField disabled
+              className={classes.inicio}
+              name="dt_inicio"
+              label="Data de Início"
+              type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          
+          </div>        
+          
           <div className={classes.end}>
+            <p>Endereço</p>
             <TextField
               className={classes.endereco}
               name="endereco"
@@ -221,7 +249,7 @@ export const DadosPessoais: React.FC<Props> = ({ onSubmit }) => {
                 />
               )}
             </InputMask>
-            <TextField className={classes.email} name="email" label="Email" />
+            <TextField className={classes.email}  name="email" label="Email" />
           </div>
           <p>Dados Escolares</p>
           <div className={classes.escolares}>
@@ -329,9 +357,26 @@ const useStyles = makeStyles((theme: Theme) =>
       alignSelf: "center",
       width: "80%",
     },
+    clube: {
+      marginTop: "-2%",
+      alignSelf: "center",
+      width: "80%",
+    },
+    modalidade: {
+      alignSelf: "center",
+      width: "80%",
+    },
+    inicio: {
+      marginTop: "2%",
+      alignSelf: "center",
+      width: "25%",
+    },
     sexo: {
       marginLeft: "2%",
       width: "13%",
+    },
+    federado: {
+      marginBottom:'3%',     
     },
     dt_nasc: { marginTop: "3%", width: "20%" },
     rg: {
@@ -344,7 +389,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "15%",
     },
     end: {
-      marginTop: "-2%",
+      marginTop: "5%",
       marginBottom: "5%",
     },
     cep: {
