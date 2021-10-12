@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { Form, Formik } from "formik";
 import * as React from "react";
-import { boleano, chefeFamilia, domicilio } from "../../jsons";
+import { boleano, chefeFamilia, domicilio } from "../../../constants";
 import { TextField } from "@material-ui/core";
 
 interface Values {

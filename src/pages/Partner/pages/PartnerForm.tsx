@@ -2,47 +2,13 @@ import React from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
-import { DadosPessoais } from "../components/personalData";
-import { RespFamilia } from "../components/familyData";
-import { Saude } from "../components/health";
-import { PesquisaSocial } from "../components/socialResearch";
+import { DadosPessoais } from "../tabs/personalData";
+import { RespFamilia } from "../tabs/familyData";
+import { Saude } from "../tabs/health";
+import { PesquisaSocial } from "../tabs/socialResearch";
 import Main from "../../../components/Main";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: any) {
-  return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`,
-  };
-}
+import TabPanel from "../components/tabPanel";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -57,6 +23,14 @@ const PartnerForm = (): JSX.Element => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  function a11yProps(index: any) {
+    return {
+      id: `vertical-tab-${index}`,
+      "aria-controls": `vertical-tabpanel-${index}`,
+    };
+  }
+
   return (
     <div>
       <Main />
@@ -82,45 +56,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <DadosPessoais
-            onSubmit={({
-              nome,
-              sobrenome,
-              sexo,
-              dt_nasc,
-              rg,
-              cpf,
-              cep,
-              logradouro,
-              endereco,
-              numero,
-              complemento,
-              bairro,
-              cidade,
-              estado,
-              telFixo,
-              celular,
-            }) => {
-              console.log(
-                nome,
-                sobrenome,
-                sexo,
-                dt_nasc,
-                rg,
-                cpf,
-                cep,
-                logradouro,
-                endereco,
-                numero,
-                complemento,
-                bairro,
-                cidade,
-                estado,
-                telFixo,
-                celular
-              );
-            }}
-          />
+          <DadosPessoais />
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>

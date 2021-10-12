@@ -1,38 +1,3 @@
-export const estados = [
-  { uf: "AC", nome: "Acre" },
-  { uf: "AL", nome: "Alagoas" },
-  { uf: "AP", nome: "Amapá" },
-  { uf: "AM", nome: "Amazonas" },
-  { uf: "BA", nome: "Bahia" },
-  { uf: "CE", nome: "Ceará" },
-  { uf: "DF", nome: "Distrito Federal" },
-  { uf: "ES", nome: "Espirito Santo" },
-  { uf: "GO", nome: "Goiás" },
-  { uf: "MA", nome: "Maranhão" },
-  { uf: "MS", nome: "Mato Grosso do Sul" },
-  { uf: "MT", nome: "Mato Grosso" },
-  { uf: "MG", nome: "Minas Gerais" },
-  { uf: "PA", nome: "Pará" },
-  { uf: "PB", nome: "Paraíba" },
-  { uf: "PR", nome: "Paraná" },
-  { uf: "PE", nome: "Pernambuco" },
-  { uf: "PI", nome: "Piauí" },
-  { uf: "RJ", nome: "Rio de Janeiro" },
-  { uf: "RN", nome: "Rio Grande do Norte" },
-  { uf: "RS", nome: "Rio Grande do Sul" },
-  { uf: "RO", nome: "Rondônia" },
-  { uf: "RR", nome: "Roraima" },
-  { uf: "SC", nome: "Santa Catarina" },
-  { uf: "SP", nome: "São Paulo" },
-  { uf: "SE", nome: "Sergipe" },
-  { uf: "TO", nome: "Tocantins" },
-];
-
-export const genero = [
-  { value: "Feminino", label: "Feminino" },
-  { value: "Masculino", label: "Masculino" },
-];
-
 export const escolaridade = [
   { value: "1", label: "Ensino Fundamental" },
   { value: "2", label: "Ensino Médio" },
@@ -96,31 +61,31 @@ export const registroDeGuarda = [
 ];
 
 export const necsEspecs = [
-  { value: "Nenhuma",  label: "Nenhuma" },
+  { value: "Nenhuma", label: "Nenhuma" },
   { value: "Auditiva", label: "Auditiva" },
-  { value: "Física",   label: "Física" },
-  { value: "Mental",   label: "Mental" },
-  { value: "Visual",   label: "Visual" },
-  { value: "Motora",   label: "Motora" },
+  { value: "Física", label: "Física" },
+  { value: "Mental", label: "Mental" },
+  { value: "Visual", label: "Visual" },
+  { value: "Motora", label: "Motora" },
 ];
 
 export const fatorRH = [
-  { value: "A+",  label: "A+" },
-  { value: "A-",  label: "A-" },
-  { value: "B+",  label: "B+" },
-  { value: "B-",  label: "B-" },
-  { value: "AB+", label: "AB+"},
-  { value: "AB-", label: "AB-"},
-  { value: "O+",  label: "O+" },
-  { value: "O-",  label: "O-" },
+  { value: "A+", label: "A+" },
+  { value: "A-", label: "A-" },
+  { value: "B+", label: "B+" },
+  { value: "B-", label: "B-" },
+  { value: "AB+", label: "AB+" },
+  { value: "AB-", label: "AB-" },
+  { value: "O+", label: "O+" },
+  { value: "O-", label: "O-" },
 ];
-	
+
 export const localAcomp = [
   { value: "Hospital Público", label: "Hospital Publico" },
   { value: "Clínica da Família", label: "Clinica da Familia" },
   { value: "Hospital Particular", label: "Hospital Particular" },
   { value: "Consultório", label: "Consultório" },
-  { value: "Outros", label: "Outros" }
+  { value: "Outros", label: "Outros" },
 ];
 
 export const freqAcomp = [
@@ -128,13 +93,13 @@ export const freqAcomp = [
   { value: "1x mes", label: "1x mes" },
   { value: "1x a cada 3 meses", label: "1x a cada 3 meses" },
   { value: "1x a cada semestre", label: "1x a cada semestre" },
-];				
-				
+];
+
 export const chefeFamilia = [
   { value: "Mulher", label: "Mulher" },
   { value: "Homem", label: "Homem" },
-];		
-        
+];
+
 export const domicilio = [
   { value: "Próprio", label: "Proprio" },
   { value: "Alugado", label: "alugado" },
@@ -142,6 +107,3 @@ export const domicilio = [
   { value: "Invasao", label: "invasao" },
   { value: "Outros", label: "outros" },
 ];
-				
-
-export default estados;

@@ -8,7 +8,7 @@ import {
 import { Form, Formik } from "formik";
 import * as React from "react";
 import { TextField } from "@material-ui/core";
-import { boleano, paisVivos, registroDeGuarda } from "../../jsons";
+import { boleano, paisVivos, registroDeGuarda } from "../../../constants";
 
 interface Values {
   nome: string;

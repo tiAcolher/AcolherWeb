@@ -27,7 +27,6 @@ import ProjetosIcon from "@material-ui/icons/Edit";
 import SegurancaIcon from "@material-ui/icons/Lock";
 import CustomLink from "./CustomLink";
 
-
 const Main = () => {
   const handleLogout = () => {
     alert("Logout Realizado");
@@ -65,14 +64,18 @@ const Main = () => {
               Projeto Acolher
             </NavLink>
           </Typography>
-          <img src='http://acolhendo.org.br/resources/oie_transparent.png.opt302x389o0%2C0s302x389.png' width="3%"  alt="" /> 
+          <img
+            src="http://acolhendo.org.br/resources/oie_transparent.png.opt302x389o0%2C0s302x389.png"
+            width="3%"
+            alt=""
+          />
           <NavLink
             to="/"
             style={{
               textDecoration: "none",
               color: "#FFF",
             }}
-          >            
+          >
             <Button color="inherit" onClick={handleLogout}>
               Sair
             </Button>
@@ -81,7 +84,7 @@ const Main = () => {
       </AppBar>
 
       <Drawer anchor="left" open={isDrawerVisible} onClose={toggleMenu}>
-        <CardHeader avatar={<Avatar />} title='Admin'/>
+        <CardHeader avatar={<Avatar />} title="Admin" />
         <Divider />
         <List>
           <CustomLink to="/partnerList">
@@ -92,14 +95,6 @@ const Main = () => {
               <ListItemText primary="Participantes" />
             </ListItem>
           </CustomLink>
-
-          {/* <ListItem button>
-            <ListItemIcon>
-              <FederadosIcon />
-            </ListItemIcon>
-            <ListItemText primary="Federados" />
-          </ListItem> */}
-
           <ListItem button>
             <ListItemIcon>
               <AtividadesIcon />

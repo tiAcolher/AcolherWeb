@@ -13,7 +13,7 @@ import {
   fatorRH,
   localAcomp,
   freqAcomp,
-} from "../../jsons";
+} from "../../../constants";
 import { TextField } from "@material-ui/core";
 
 interface Values {
