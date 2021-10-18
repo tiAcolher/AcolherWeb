@@ -1,321 +1,309 @@
+import React, { useState } from "react";
 import {
-  Button,
   createStyles,
   makeStyles,
-  MenuItem,
+  TextField,
   Theme,
+  Radio,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Select,
+  MenuItem,
+  Button,
 } from "@material-ui/core";
-import { Form, Formik } from "formik";
-import * as React from "react";
-import { TextField } from "@material-ui/core";
-import { boleano, paisVivos, registroDeGuarda } from "../../../constants";
 
-interface Values {
-  nome: string;
-  sobrenome: string;
-  sexo: string;
-  dt_nasc: string;
-  rg: string;
-  cpf: string;
-  cep: string;
-  logradouro: string;
-  endereco: string;
-  numero: string;
-  complemento: string;
-  bairro: string;
-  cidade: string;
-  estado: string;
-  telFixo: string;
-  celular: string;
-}
+import {
+  registroDeGuarda
+} from "../../../constants";
 
-interface Props {
-  onSubmit: (values: Values) => void;
-}
-
-export const RespFamilia: React.FC<Props> = ({ onSubmit }) => {
+export const RespFamilia = () => {
   const classes = useStyles();
-  const [paisSep, setPaisSep] = React.useState("");
-  const [PaisVivos, setPaisVivos] = React.useState("");
-  const [pensao, setPensao] = React.useState("");
-  const [Registro, setRegistro] = React.useState("");
-  const handleChangePaisSep = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPaisSep(event.target.value);
-  };
-  const handleChangePaisVivos = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setPaisVivos(event.target.value);
-  };
-  const handleChangePensao = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPensao(event.target.value);
-  };
-  const handleChangeRegistro = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRegistro(event.target.value);
+  const [nomeMae, setNomeMae] = useState("");
+  const [dataNascMae, setDataNascMae] = useState("");
+  const [profissaoMae, setProfissaoMae] = useState("");
+  const [nomePai, setNomePai] = useState("");
+  const [dataNascPai, setDataNascPai] = useState("");
+  const [profissaoPai, setProfissaoPai] = useState("");
+  const [paisSep, setPaisSep] = useState("n");
+  const [paisVivos, setPaisVivos] = useState("s");
+  const [recPens, setRecPens] = useState("n");
+  const [respLegal, setRespLegal] = useState("");
+  const [dataNascrespLegal, setDataNascrespLegal] = useState("");
+  const [grauParentesco, setGrauParentesco] = useState("");
+  const [registroGuarda, setRegistroGuarda] = useState("n");  
+  const [tipoRegistro, setTipoRegistro] = useState("Registro de Guarda");
+  const [numPessoas, setNumPessoas] = useState("");
+  const [parentesco, setParentesco] = useState("");
+
+  const handleSubmit = () => {
+    console.log(
+      JSON.stringify({
+        nomeMae,
+        dataNascMae,
+        profissaoMae,
+        nomePai,
+        dataNascPai,
+        profissaoPai,
+        paisSep,
+        paisVivos,
+        recPens,
+        respLegal,
+        dataNascrespLegal,
+        grauParentesco,
+        registroGuarda,
+        tipoRegistro,
+        numPessoas,
+        parentesco,
+      })
+    );
   };
 
   return (
-    <Formik
-      initialValues={{
-        nome: "",
-        sobrenome: "",
-        sexo: "",
-        dt_nasc: "",
-        rg: "",
-        cpf: "",
-        cep: "",
-        logradouro: "",
-        endereco: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
-        telFixo: "",
-        celular: "",
-      }}
-      onSubmit={(values) => {
-        onSubmit(values);
-      }}
-    >
-      {({ values }) => (
-        <Form className={classes.formulario}>
-          <p>Filiação e Responsável Legal</p>
-          <div className={classes.respFamilia}>
-            <TextField className={classes.mae} name="mae" label="Mãe" />
-            <div className={classes.espaco}></div>
-            <TextField
-              className={classes.dt_nascMae}
-              name="dt_nascMae"
-              label="Data de Nascimento"
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              className={classes.profissaoMae}
-              name="profissaoMae"
-              label="Profissão"
-            />
-            <div className={classes.espaco}></div>
-            <TextField className={classes.pai} name="pai" label="Pai" />
-            <div className={classes.espaco}></div>
-            <TextField
-              className={classes.dt_nascPai}
-              name="dt_nascPai"
-              label="Data de Nascimento"
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-
-            <TextField
-              className={classes.profissaoPai}
-              name="profissaoPai"
-              label="Profissão"
-            />
-            <div className={classes.espaco}></div>
-            <TextField
-              className={classes.paisSeparados}
-              name="paisSeparados"
-              label="Pais Separados ?"
-              select
-              value={paisSep}
-              onChange={handleChangePaisSep}
-            >
-              {" "}
-              {boleano.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.value}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              className={classes.paisVivos}
-              name="paisVivos"
-              label="Pais Vivos ?"
-              select
-              value={PaisVivos}
-              onChange={handleChangePaisVivos}
-            >
-              {" "}
-              {paisVivos.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.value}
-                </MenuItem>
-              ))}
-            </TextField>
-
-            <TextField
-              className={classes.recebePensao}
-              name="recebePensao"
-              label="Criança Recebe Pensão ?"
-              select
-              value={pensao}
-              onChange={handleChangePensao}
-            >
-              {" "}
-              {boleano.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.value}
-                </MenuItem>
-              ))}
-            </TextField>
-            <div className={classes.espaco}></div>
-            <TextField
-              className={classes.justificativa}
-              name="justificativa"
-              label="Justificativa"
-            />
-
-            <TextField
-              className={classes.respLegal}
-              name="respLegal"
-              label="Responsável Legal"
-            />
-            <div className={classes.espaco}></div>
-            <TextField
-              className={classes.dt_nascResp}
-              name="dt_nascResp"
-              label="Data de Nascimento"
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-
-            <TextField
-              className={classes.grauParentesco}
-              name="grauParentesco"
-              label="Grau de Parentesco"
-            />
-
-            <TextField
-              className={classes.registroGuarda}
-              name="registroGuarda"
-              label="Registro de Guarda"
-              select
-              value={Registro}
-              onChange={handleChangeRegistro}
-            >
-              {" "}
-              {registroDeGuarda.map((option) => (
-                <MenuItem key={option.label} value={option.label}>
-                  {option.value}
-                </MenuItem>
-              ))}
-            </TextField>
-          </div>
-          <p>Dados da Família</p>
-          <div className={classes.dadosFamilia}>
-            <TextField
-              className={classes.NumPessoas}
-              name="NumPessoas"
+    <div className={classes.container}>
+      <p>
+        Filiação e Responsável Legal
+      </p>
+      <div className={classes.form}>
+        <TextField
+          className={classes.input}
+          name="mae"
+          label="Nome da Mãe"
+          onChange={(event: any) => {
+            setNomeMae(event.target.value);
+          }}
+        />
+        <TextField
+          name="dataNascMae"
+          type="date"
+          label="Data de Nascimento da Mãe"
+          className={classes.input}
+          InputLabelProps={{ shrink: true }}
+          value={dataNascMae}
+          onChange={(event: any) => {
+            setDataNascMae(event.target.value);
+          }}
+        />
+        <TextField
+          className={classes.input}
+          name="profissaoMae"
+          label="Profissão da Mãe"
+          onChange={(event: any) => {
+            setProfissaoMae(event.target.value);
+          }}          
+        />
+        <TextField
+          className={classes.input}
+          name="Pai"
+          label="Nome do Pai"
+          onChange={(event: any) => {
+            setNomePai(event.target.value);
+          }}
+        />
+        <TextField
+          name="dataNascPai"
+          type="date"
+          label="Data de Nascimento da Pai"
+          className={classes.input}
+          InputLabelProps={{ shrink: true }}
+          value={dataNascPai}
+          onChange={(event: any) => {
+            setDataNascPai(event.target.value);
+          }}
+        />
+        <TextField
+          className={classes.input}
+          name="profissaoPai"
+          label="Profissão da Pai"
+          onChange={(event: any) => {
+            setProfissaoPai(event.target.value);
+          }}          
+        />
+        <FormLabel className={classes.label} component="legend">
+          Pais Separados ?
+        </FormLabel>
+        <RadioGroup
+          aria-label="paisSep"
+          defaultValue="n"
+          value={paisSep}
+          name="radio-buttons-group"
+          row
+        >
+          <FormControlLabel
+            value="s"
+            control={<Radio onClick={() => setPaisSep("s")} />}
+            label="Sim"
+          />
+          <FormControlLabel
+            value="n"
+            control={<Radio onClick={() => setPaisSep("n")} />}
+            label="Não"
+          />
+          </RadioGroup>
+       <FormLabel className={classes.label} component="legend">
+          Pais Vivos ?
+        </FormLabel>
+        <RadioGroup
+          aria-label="paisSep"
+          defaultValue="s"
+          value={paisVivos}
+          name="radio-buttons-group"
+          row
+        >
+          <FormControlLabel
+            value="s"
+            control={<Radio onClick={() => setPaisVivos("s")} />}
+            label="Sim"
+          />
+          <FormControlLabel
+            value="n"
+            control={<Radio onClick={() => setPaisVivos("n")} />}
+            label="Não"
+          />
+        </RadioGroup>
+        <FormLabel className={classes.label} component="legend">
+          Criança Recebe Pensão ?
+        </FormLabel>
+        <RadioGroup
+          aria-label="paisSep"
+          defaultValue="n"
+          value={recPens}
+          name="radio-buttons-group"
+          row
+        >
+          <FormControlLabel
+            value="s"
+            control={<Radio onClick={() => setRecPens("s")} />}
+            label="Sim"
+          />
+          <FormControlLabel
+            value="n"
+            control={<Radio onClick={() => setRecPens("n")} />}
+            label="Não"
+          />
+        </RadioGroup>
+          {recPens === "s" &&
+              <TextField
+              className={classes.input}
+              name="justifPens"
+              label="Justificativa da Pensão"
+          />}
+        <TextField
+          className={classes.input}
+          name="respLegal"
+          label="Responsável Legal"
+          onChange={(event: any) => {
+            setRespLegal(event.target.value);
+          }}
+        />
+        <TextField
+          name="dataNascrespLegal"
+          type="date"
+          label="Data de Nascimento do Responável Legal"
+          className={classes.input}
+          InputLabelProps={{ shrink: true }}
+          value={dataNascrespLegal}
+          onChange={(event: any) => {
+            setDataNascrespLegal(event.target.value);
+          }}
+        />
+        <TextField
+          className={classes.input}
+          name="grauParentesco"
+          label="Grau de Parentesco"
+          onChange={(event: any) => {
+            setGrauParentesco(event.target.value);
+          }}
+        />
+        <FormLabel className={classes.label} component="legend">
+          Possui Registro de Guarda ?
+        </FormLabel>
+        <RadioGroup
+          aria-label="registroGuarda"
+          defaultValue="n"
+          value={registroGuarda}
+          name="radio-buttons-group"
+          row
+        >
+          <FormControlLabel
+            value="s"
+            control={<Radio onClick={() => setRegistroGuarda("s")} />}
+            label="Sim"
+          />
+          <FormControlLabel
+            value="n"
+            control={<Radio onClick={() => setRegistroGuarda("n")} />}
+            label="Não"
+          />
+        </RadioGroup>
+          {registroGuarda === "s" &&
+        <><FormLabel className={classes.label}>Tipo de Registro :</FormLabel><Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={tipoRegistro}
+            onChange={(event: any) => {
+              setTipoRegistro(event.target.value);
+            }}
+            className={classes.input}
+          >
+            {registroDeGuarda.map((item) => (
+              <MenuItem value={item.value} key={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select></>}
+        <p>Dados da Família</p>
+        <TextField
+              className={classes.input}
+              name="numPessoas"
               label="Número de Pessoas na Família"
               type="number"
+              onChange={(event: any) => {
+              setNumPessoas(event.target.value);
+            }}
             />
-            <TextField className={classes.nomes} name="nomes" label="Nome" />
-            <div className={classes.espaco}></div>
+            <TextField className={classes.input} name="nomes" label="Nome" />
+            <div className={classes.input}></div>
             <TextField
-              className={classes.parentesco}
+              className={classes.input}
               name="parentesco"
               label="Parentesco"
+              onChange={(event: any) => {
+              setParentesco(event.target.value);
+            } }
             />
-          </div>
-          {/* <Button className={classes.salvar} type="submit">Salvar</Button> */}
-          <Button type="submit" variant="outlined" color="primary">
-            {" "}
-            Salvar{" "}
-          </Button>
-          {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}{" "}
-        </Form>
-      )}
-    </Formik>
+        <Button
+          onClick={handleSubmit}
+          className={classes.button}
+          variant="contained"
+          color="primary"
+        >
+          Salvar
+        </Button>
+      </div>
+    </div>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    formulario: {
-      marginTop: "-20%",
+    container: {
+      marginTop: "-18%",
+      flexDirection: "column",
     },
-    respFamilia: {
-      marginTop: "-2%",
-      marginBottom: "5%",
+    form: {
+      display: "flex",
+      flexDirection: "column",
     },
-    mae: {
+    input: {
       width: "80%",
     },
-    dt_nascMae: { marginTop: "3%", width: "17%" },
-    profissaoMae: {
-      marginLeft: "2%",
-      marginTop: "3%",
+    label: {
+      marginTop: "2%",
     },
-    espaco: {
-      marginLeft: "5%",
-    },
-    pai: {
-      width: "80%",
-      marginTop: "3%",
-    },
-    dt_nascPai: { marginTop: "3%", width: "17%" },
-    profissaoPai: {
-      marginLeft: "2%",
-      marginTop: "3%",
-    },
-
-    paisSeparados: {
-      width: "23%",
-      marginTop: "3%",
-    },
-    paisVivos: {
-      marginLeft: "2%",
-      width: "18%",
-      marginTop: "3%",
-    },
-    recebePensao: {
-      marginLeft: "2%",
-      width: "35%",
-      marginTop: "3%",
-    },
-    justificativa: {
-      width: "70%",
-      marginTop: "3%",
-    },
-    respLegal: {
-      width: "80%",
-      marginTop: "3%",
-    },
-    dt_nascResp: {
-      marginTop: "3%",
-      width: "17%",
-    },
-    grauParentesco: {
-      width: "30%",
-      marginLeft: "2%",
-      marginTop: "3%",
-    },
-    registroGuarda: {
-      marginLeft: "2%",
-      width: "30%",
-      marginTop: "3%",
-    },
-    dadosFamilia: {
-      marginTop: "-2%",
-      marginBottom: "5%",
-    },
-    NumPessoas: {
-      width: "45%",
-    },
-    nomes: {
-      width: "80%",
-      marginTop: "3%",
-    },
-    parentesco: {
-      marginBottom: "5%",
-      marginTop: "3%",
+    button: {
+      marginTop: "2%",
+      width: "15%",
     },
   })
 );

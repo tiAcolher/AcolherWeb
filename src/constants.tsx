@@ -54,10 +54,8 @@ export const paisVivos = [
 ];
 
 export const registroDeGuarda = [
-  { value: "Sim", label: "True" },
-  { value: "Não", label: "False" },
-  { value: "Carta Social", label: "Carta Social" },
   { value: "Registro de Guarda", label: "Registro de Guarda" },
+  { value: "Carta Social", label: "Carta Social" },
 ];
 
 export const necsEspecs = [

@@ -68,45 +68,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <RespFamilia
-            onSubmit={({
-              nome,
-              sobrenome,
-              sexo,
-              dt_nasc,
-              rg,
-              cpf,
-              cep,
-              logradouro,
-              endereco,
-              numero,
-              complemento,
-              bairro,
-              cidade,
-              estado,
-              telFixo,
-              celular,
-            }) => {
-              console.log(
-                nome,
-                sobrenome,
-                sexo,
-                dt_nasc,
-                rg,
-                cpf,
-                cep,
-                logradouro,
-                endereco,
-                numero,
-                complemento,
-                bairro,
-                cidade,
-                estado,
-                telFixo,
-                celular
-              );
-            }}
-          />
+          <RespFamilia/>
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
@@ -118,45 +80,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <Saude
-            onSubmit={({
-              nome,
-              sobrenome,
-              sexo,
-              dt_nasc,
-              rg,
-              cpf,
-              cep,
-              logradouro,
-              endereco,
-              numero,
-              complemento,
-              bairro,
-              cidade,
-              estado,
-              telFixo,
-              celular,
-            }) => {
-              console.log(
-                nome,
-                sobrenome,
-                sexo,
-                dt_nasc,
-                rg,
-                cpf,
-                cep,
-                logradouro,
-                endereco,
-                numero,
-                complemento,
-                bairro,
-                cidade,
-                estado,
-                telFixo,
-                celular
-              );
-            }}
-          />
+          <Saude/>
         </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
@@ -168,45 +92,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <PesquisaSocial
-            onSubmit={({
-              nome,
-              sobrenome,
-              sexo,
-              dt_nasc,
-              rg,
-              cpf,
-              cep,
-              logradouro,
-              endereco,
-              numero,
-              complemento,
-              bairro,
-              cidade,
-              estado,
-              telFixo,
-              celular,
-            }) => {
-              console.log(
-                nome,
-                sobrenome,
-                sexo,
-                dt_nasc,
-                rg,
-                cpf,
-                cep,
-                logradouro,
-                endereco,
-                numero,
-                complemento,
-                bairro,
-                cidade,
-                estado,
-                telFixo,
-                celular
-              );
-            }}
-          />
+          <PesquisaSocial/>
         </div>
       </TabPanel>
     </div>

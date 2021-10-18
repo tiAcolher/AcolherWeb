@@ -30,32 +30,46 @@ export const DadosPessoais = () => {
   const [uf, setUf] = useState("AC");
   const [cidade, setCidade] = useState("Acrelândia");
   const [escolaridade, setEscolaridade] = useState();
-  const [turno, setTurno] = useState();
-  const [serie, setSerie] = useState();
+  const [turno, setTurno] = useState("");
+  const [serie, setSerie] = useState("");
   const [nome, setNome] = useState("");
   const [genero, setGenero] = useState("f");
   const [dtNascimento, setDtNascimento] = useState("");
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
+  const [rg, setRg] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [logradouro, setLogradouro] = useState("");
+  const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [bairro, setBairro] = useState("");  
+  const [telFixo, setTelFixo] = useState("");
+  const [celular, setCelular] = useState("");
+  const [escola, setEscola] = useState("");
 
   const handleSubmit = () => {
-    if (Boolean(email)) {
-      console.log(
-        JSON.stringify({
-          nome,
-          serie,
-          turno,
-          escolaridade,
-          cidade,
-          uf,
-          email,
-          isFederated,
-          genero,
-          dtNascimento,
-        })
-      );
-    } else {
-      alert("Tá esquecendo alguma coisa aí gatinho...");
-    }
+    console.log(
+      JSON.stringify({
+        nome,
+        genero,
+        dtNascimento,
+        rg,
+        cpf,
+        isFederated,
+        logradouro,
+        numero,
+        complemento,
+        bairro,
+        uf,
+        cidade,
+        telFixo,
+        celular,
+        email,
+        escola,
+        escolaridade,
+        serie,
+        turno,
+      })
+    );
   };
 
   return (
@@ -63,7 +77,7 @@ export const DadosPessoais = () => {
       <p>Dados Pessoais</p>
       <div className={classes.form}>
         <TextField
-          className={[classes.input, classes.nome].join(" ")}
+          className={classes.input}
           name="nome"
           label="Nome Completo"
           onChange={(event: any) => {
@@ -107,8 +121,20 @@ export const DadosPessoais = () => {
             setDtNascimento(event.target.value);
           }}
         />
-        <TextField name="rg" label="RG" className={classes.input} />
-        <ReactInputMask mask="999.999.999-99">
+        <TextField
+          className={classes.input}
+          name="rg"
+          label="RG"
+          onChange={(event: any) => {
+            setRg(event.target.value);
+          }}
+        />
+        <ReactInputMask
+          mask="999.999.999-99"
+          onChange={(event: any) => {
+            setCpf(event.target.value);
+          }}
+        >
           {() => (
             <TextField
               className={classes.input}
@@ -127,28 +153,45 @@ export const DadosPessoais = () => {
           }
           label="Atleta Federado"
         />
+        {/* TODO: GRAVAR DADOS FEDERATEDFORM */}
         {isFederated && <FederatedForm />}
         <p>Endereço</p>
         <TextField
+          className={classes.input}
           name="logradouro"
           label="Logradouro"
-          className={classes.input}
+          onChange={(event: any) => {
+            setLogradouro(event.target.value);
+          }}
         />
         <TextField
+          className={classes.input}
           name="numero"
           label="Número"
           type="number"
-          className={classes.input}
+          onChange={(event: any) => {
+            setNumero(event.target.value);
+          }}
         />
         <TextField
+          className={classes.input}
           name="complemento"
           label="Complemento"
-          className={classes.input}
+          onChange={(event: any) => {
+            setComplemento(event.target.value);
+          }}
         />
         <ReactInputMask mask="99999-999">
           {() => <TextField className={classes.input} name="cep" label="CEP" />}
         </ReactInputMask>
-        <TextField name="bairro" label="Bairro" className={classes.input} />
+        <TextField
+          name="bairro"
+          label="Bairro"
+          className={classes.input}
+          onChange={(event: any) => {
+            setBairro(event.target.value);
+          }}
+        />
         <FormLabel className={classes.label}>Estado</FormLabel>
         <Select
           labelId="demo-simple-select-standard-label"
@@ -184,7 +227,12 @@ export const DadosPessoais = () => {
             ))}
         </Select>
         <p>Contatos</p>
-        <ReactInputMask mask="(99) 9999-9999">
+        <ReactInputMask
+          mask="(99) 9999-9999"
+          onChange={(event: any) => {
+            setTelFixo(event.target.value);
+          }}
+        >
           {() => (
             <TextField
               className={classes.input}
@@ -193,7 +241,12 @@ export const DadosPessoais = () => {
             />
           )}
         </ReactInputMask>
-        <ReactInputMask mask="(99) 9 9999-9999">
+        <ReactInputMask
+          mask="(99) 9 9999-9999"
+          onChange={(event: any) => {
+            setCelular(event.target.value);
+          }}
+        >
           {() => (
             <TextField
               className={classes.input}
@@ -206,8 +259,6 @@ export const DadosPessoais = () => {
           onChange={(event: any) => {
             setEmail(event.target.value);
           }}
-          error={!Boolean(email)}
-          required
           className={classes.input}
           name="email"
           label="Email"
@@ -217,6 +268,9 @@ export const DadosPessoais = () => {
           className={classes.input}
           name="escola"
           label="Nome da Escola"
+          onChange={(event: any) => {
+            setEscola(event.target.value);
+          }}
         />
         <FormLabel className={classes.label}>Escolaridade</FormLabel>
         <Select
@@ -277,248 +331,6 @@ export const DadosPessoais = () => {
       </div>
     </div>
   );
-
-  // return (
-  //   <Formik
-  //     initialValues={{
-  //       nome: "",
-  //       sobrenome: "",
-  //       sexo: "",
-  //       dt_nasc: "",
-  //       rg: "",
-  //       cpf: "",
-  //       cep: "",
-  //       logradouro: "",
-  //       endereco: "",
-  //       numero: "",
-  //       complemento: "",
-  //       bairro: "",
-  //       cidade: "",
-  //       estado: "",
-  //       telFixo: "",
-  //       celular: "",
-  //     }}
-  //     onSubmit={(values) => {
-  //       console.log("batatinha");
-  //     }}
-  //   >
-  //     {({ values }) => (
-  //
-  //           <TextField
-  //             name="dt_nasc"
-  //             label="Data de Nascimento"
-  //             type="date"
-  //             className={classes.dt_nasc}
-  //             InputLabelProps={{
-  //               shrink: true,
-  //             }}
-  //           />
-  //           <TextField className={classes.rg} name="rg" label="RG" />
-  //           <InputMask mask="999.999.999-99">
-  //             {() => (
-  //               <TextField
-  //                 className={classes.cpf}
-  //                 label="CPF"
-  //                 name="cpf"
-  //                 type="text"
-  //               />
-  //             )}
-  //           </InputMask>
-  //         </div>
-
-  //         <div>
-  //           <label>
-  //             Atleta Federado :
-  //             <input className={classes.federado} type="checkbox" />
-  //           </label>
-  //           <p>Dados Federados</p>
-  //           <TextField
-  //             disabled
-  //             className={classes.clube}
-  //             name="clube"
-  //             label="Nome do Clube"
-  //           />
-  //           <TextField
-  //             disabled
-  //             className={classes.modalidade}
-  //             name="modalidade"
-  //             label="Modalidade Esportiva"
-  //           />
-  //           <TextField
-  //             disabled
-  //             className={classes.inicio}
-  //             name="dt_inicio"
-  //             label="Data de Início"
-  //             type="date"
-  //             InputLabelProps={{
-  //               shrink: true,
-  //             }}
-  //           />
-  //         </div>
-
-  //         <div className={classes.end}>
-  //           <p>Endereço</p>
-  //           <TextField
-  //             className={classes.endereco}
-  //             name="endereco"
-  //             label="Endereço"
-  //           />
-  //           <TextField
-  //             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-  //             className={classes.numero}
-  //             name="numero"
-  //             label="Número"
-  //             type="number"
-  //           />
-  //           <TextField
-  //             className={classes.complemento}
-  //             name="complemento"
-  //             label="Complemento"
-  //           />
-  //           <InputMask mask="99999-999">
-  //             {() => (
-  //               <TextField className={classes.cep} name="cep" label="CEP" />
-  //             )}
-  //           </InputMask>
-  //           <TextField
-  //             className={classes.bairro}
-  //             name="bairro"
-  //             label="Bairro"
-  //           />
-  //           <TextField
-  //             className={classes.cidade}
-  //             name="cidade"
-  //             label="Cidade"
-  //           />
-  //           <TextField
-  //             className={classes.estado}
-  //             name="estado"
-  //             select
-  //             label="Estado (UF)"
-  //             value={json_estado}
-  //             onChange={handleChangeEstados}
-  //           >
-  //             {" "}
-  //             {estados.map((option) => (
-  //               <MenuItem key={option.uf} value={option.uf}>
-  //                 {option.nome}
-  //               </MenuItem>
-  //             ))}
-  //           </TextField>
-  //         </div>
-  //         <p>Contatos</p>
-  //         <div className={classes.contatos}>
-  //           <InputMask mask="(99) 9999-9999">
-  //             {() => (
-  //               <TextField
-  //                 className={classes.telFixo}
-  //                 name="telFixo"
-  //                 label="Telefone Fixo"
-  //               />
-  //             )}
-  //           </InputMask>
-  //           <InputMask mask="(99) 9 9999-9999">
-  //             {() => (
-  //               <TextField
-  //                 className={classes.celular}
-  //                 name="celular"
-  //                 label="Celular"
-  //               />
-  //             )}
-  //           </InputMask>
-  //           <TextField className={classes.email} name="email" label="Email" />
-  //         </div>
-  //         <p>Dados Escolares</p>
-  //         <div className={classes.escolares}>
-  //           <TextField
-  //             className={classes.escola}
-  //             name="escola"
-  //             label="Nome da Escola"
-  //           />
-  //           <div className={classes.espaco}></div>
-  //           <TextField
-  //             className={classes.escolaridade}
-  //             name="escolaridade"
-  //             select
-  //             label="Escolaridade"
-  //             value={escolaridades}
-  //             onChange={handleChangeEscol}
-  //           >
-  //             {escolaridade.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </TextField>
-  //           <TextField
-  //             className={classes.turno}
-  //             name="turno"
-  //             select
-  //             label="Turno"
-  //             value={turno}
-  //             onChange={handleChangeTurnos}
-  //           >
-  //             {turnos.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </TextField>
-  //           <TextField
-  //             className={classes.serie}
-  //             name="serie"
-  //             select
-  //             label="Série"
-  //             value={serie}
-  //             onChange={handleChangeSeries}
-  //           >
-  //             {series.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </TextField>
-  //           <TextField
-  //             className={classes.situacao}
-  //             name="situacao"
-  //             select
-  //             label="Situação"
-  //             value={situacao}
-  //             onChange={handleChangeSituacoes}
-  //           >
-  //             {situacoes.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </TextField>
-  //           <TextField className={classes.ano} name="ano" label="Ano" />
-  //           <div className={classes.espaco}></div>
-  //           <TextField
-  //             className={classes.deslocamento}
-  //             name="deslocamento"
-  //             select
-  //             label="Deslocamento ao Colégio"
-  //             value={locomocoes}
-  //             onChange={handleChangeLocomocao}
-  //           >
-  //             {locomocao.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </TextField>
-  //         </div>
-  //         {/* <Button className={classes.salvar} type="submit">Salvar</Button> */}
-  //         <Button type="submit" variant="outlined" color="primary">
-  //           {" "}
-  //           Salvar{" "}
-  //         </Button>
-  //         {/* <pre>{JSON.stringify(values, null, 2)}</pre>{" "} */}
-  //       </Form>
-  //     )}
-  //   </Formik>
-  // );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -539,10 +351,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     button: {
       marginTop: "2%",
-      width: "80%",
-    },
-    nome: {
-      backgroundColor: "blue",
+      width: "15%",
     },
   })
 );

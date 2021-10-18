@@ -14,7 +14,7 @@ const Home = (): JSX.Element => {
       <Grid className={classes.container}>
         <Button className={classes.buttons} variant='contained'  onClick={() => history.push("/partnerList")} >Participantes</Button>        
         {/* <Button className={classes.buttons} variant='contained' >Federados</Button> */}
-        <Button className={classes.buttons} variant='contained'>Atividades</Button>
+        <Button className={classes.buttons} variant='contained' onClick={() => history.push("/activityList")} >Atividades</Button>
         <Button className={classes.buttons} variant='contained'>Projetos</Button>
         <Button className={classes.buttons} variant='contained'>Doações</Button>
         <Button className={classes.buttons} variant='contained'>Relatórios</Button>

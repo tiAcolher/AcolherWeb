@@ -22,7 +22,7 @@ import ParticipanteIcon from "@material-ui/icons/Person";
 import RelatorioIcon from "@material-ui/icons/Description";
 import DoacoesIcon from "@material-ui/icons/Payment";
 import AtividadesIcon from "@material-ui/icons/SportsHandball";
-import FederadosIcon from "@material-ui/icons/EmojiEvents";
+// import FederadosIcon from "@material-ui/icons/EmojiEvents";
 import ProjetosIcon from "@material-ui/icons/Edit";
 import SegurancaIcon from "@material-ui/icons/Lock";
 import CustomLink from "./CustomLink";
@@ -95,12 +95,14 @@ const Main = () => {
               <ListItemText primary="Participantes" />
             </ListItem>
           </CustomLink>
+          <CustomLink to="/activityList">
           <ListItem button>
             <ListItemIcon>
               <AtividadesIcon />
             </ListItemIcon>
-            <ListItemText primary="Atividades" />
+            <ListItemText primary="Atividades" />            
           </ListItem>
+          </CustomLink>
           <ListItem button>
             <ListItemIcon>
               <ProjetosIcon />

@@ -7,17 +7,30 @@ const FederatedForm = () => {
   return (
     <div className={classes.form}>
       <p>Dados Federados</p>
-      <TextField className={classes.input} name="clube" label="Nome do Clube" />
+      <TextField
+        className={classes.input}
+        name="clube"
+        label="Nome do Clube"
+        // onChange={(event: any) => {
+        //   setClube(event.target.value);
+        // }}
+      />
       <TextField
         className={classes.input}
         name="modalidade"
         label="Modalidade Esportiva"
+        // onChange={(event: any) => {
+        //   setModalidade(event.target.value);
+        // }}
       />
       <TextField
         className={classes.input}
         name="dataInicio"
         label="Data de Início"
         type="date"
+        // onChange={(event: any) => {
+        //   setdataInicio(event.target.value);
+        // }}
         InputLabelProps={{ shrink: true }}
       />
     </div>

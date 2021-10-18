@@ -11,51 +11,54 @@ import {
   Typography,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import { useHistory } from "react-router-dom";
+
 import Main from "../../../components/Main";
 
-
-  
-const PartnerList = (): JSX.Element => {
+const ActivitiesList = (): JSX.Element => {
   const classes = useStyles();
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const mockPartnerList = [
     {
-      name: "Marcela",
-      phone: "88 8888-8888",
-      parent: "Felipe",
-      parentPhone: "99 9999-9999",
+      Activitie: "Futebol",
+      Category: "sub 11",
+      Appointment: "9h - 11h",
+      Responsable: "Daniel",    
     },
     {
-      name: "Silas",
-      phone: "66 6666-6666",
-      parent: "ciclano",
-      parentPhone: "77 7777-7777",
+      Activitie: "Futebol",
+      Category: "sub 9",
+      Appointment: "11h - 13h",
+      Responsable: "Daniel",    
     },
     {
-      name: "Felipe",
-      phone: "55 5555-5555",
-      parent: "beltrano",
-      parentPhone: "44 4444-4444",
+      Activitie: "Futebol",
+      Category: "sub 13",
+      Appointment: "13h - 15h",
+      Responsable: "Daniel",    
     },
     {
-      name: "Maria",
-      phone: "11 2222-2222",
-      parent: "fulano",
-      parentPhone: "33 3333-3333",
+      Activitie: "Vôlei",
+      Category: "sub 11",
+      Appointment: "13h - 15h",
+      Responsable: "Maria",    
     },
     {
-      name: "Juliana",
-      phone: "11 9999-9999",
-      parent: "Paula",
-      parentPhone: "22 2222-2222",
+      Activitie: "Vôlei",
+      Category: "sub 11",
+      Appointment: "15h - 17h",
+      Responsable: "Maria",    
     },
-];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  
+    {
+      Activitie: "Handebol",
+      Category: "sub 15",
+      Appointment: "9h - 11h",
+      Responsable: "Fellipe",    
+    },
+  ];
 
   const history = useHistory();
 
@@ -65,7 +68,7 @@ const PartnerList = (): JSX.Element => {
   useEffect(() => {
     if (search !== "") {
       let newList = mockPartnerList.filter((item) =>
-        item.name.toUpperCase().includes(search.toUpperCase())
+        item.Activitie.toUpperCase().includes(search.toUpperCase())
       );
       setList(newList);
     } else {
@@ -94,9 +97,8 @@ const PartnerList = (): JSX.Element => {
             inputProps={{ "aria-label": "search" }}
           />
         </div>
-
-        <PersonAddIcon
-          onClick={() => history.push("createPartner")}
+        <AddIcon
+          onClick={() => history.push("ActivityForm")}
           className={classes.addButton}
         />
         <List style={{ marginTop: 32 }}>
@@ -105,12 +107,10 @@ const PartnerList = (): JSX.Element => {
               <Box display="flex">
                 <Avatar className={classes.avatar} />
                 <Box className={classes.cardContent}>
-                  <Typography>Nome: {partner?.name}</Typography>
-                  <Typography>Telefone: {partner?.phone}</Typography>
-                  <Typography>Responsável: {partner?.parent}</Typography>
-                  <Typography>
-                    Telefone do Responsável: {partner?.parentPhone}
-                  </Typography>
+                  <Typography>Atividade: {partner?.Activitie}</Typography>
+                  <Typography>Categoria: {partner?.Category}</Typography>
+                  <Typography>Horário: {partner?.Appointment}</Typography>
+                  <Typography>Responsável: {partner?.Responsable}</Typography>
                 </Box>
                 <div className={classes.buttons}>
                   <EditIcon className={classes.EditIcon} />
@@ -194,4 +194,4 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default PartnerList;
+export default ActivitiesList;
