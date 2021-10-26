@@ -17,46 +17,46 @@ import { domicilio, chefeFamilia } from "../../../constants";
 
 export const PesquisaSocial = () => {
   const classes = useStyles();
+  const [chefeDaFamilia, setChefeFamilia] = useState("");
+  const [menores, setMenores] = useState(0);
+  const [aposentadosPensionistas, setAposentadosPensionistas] = useState(0);
   const [moradia, setMoradia] = useState("");
-  const [redeEletrica, setRedeEletrica] = useState("s");
-  const [redeEsgoto, setRedeEsgoto] = useState("s");
-  const [ruaAsfaltada, setRuaAsfaltada] = useState("s");
-  const [aguaEnc, setAguaEnc] = useState("s");
-  const [redeServ, setRedeServ] = useState("s");
-  const [computador, setComputador] = useState("s");  
-  const [internet, setInternet] = useState("s");
-  const [celCriAdo, setCelCriAdo] = useState("s");
-  const [intCriAdo, setIntCriAdo] = useState("s");  
-  const [expTrbAdo, setExpTrbAdo] = useState("s");
-  const [bolsaFamiliaAtu, setBolsaFamiliaAtu] = useState("s");
-  const [bolsaFamiliaPas, setBolsaFamiliaPas] = useState("s");
-  const [outroBen, setOutroBen] = useState("s");
-  const [chefeFami, setChefeFami] = useState("s");
-  const [pessoasDef, setPessoasDef] = useState("s");
-  const [menores, setMenores] = useState("s");
-  const [apoPens, setApoPens] = useState("s");
+  const [redeEletrica, setRedeEletrica] = useState(true);
+  const [redeEsgoto, setRedeEsgoto] = useState(true);
+  const [ruaAsfaltada, setRuaAsfaltada] = useState(true);
+  const [aguaEncanada, setAguaEncanada] = useState(true);
+  const [redeServicos, setRedeServicos] = useState(true);
+  const [computador, setComputador] = useState(true);  
+  const [internet, setInternet] = useState(true);
+  const [criancaAdolescentePossuiCelular, setCriancaAdolescentePossuiCelulardo] = useState(true);
+  const [criancaAdolescentePossuiInternet, setCriancaAdolescentePossuiInternet] = useState(true);  
+  const [adolenscenteComExpDeTrabalho, setAdolenscenteComExpDeTrabalho] = useState(true);
+  const [bolsaFamiliaAtualmente, setBolsaFamiliaAtualmente] = useState(true);
+  const [bolsaFamiliaAnteriormente, setBolsaFamiliaAnteriormente] = useState(true);
+  const [outroBeneficio, setOutroBeneficio] = useState(true);
+  const [pessoasComDeficiencia, setPessoasComDeficiencia] = useState(true);
 
   const handleSubmit = () => {
     console.log(
       JSON.stringify({
-        chefeFami,
+        chefeDaFamilia,
+        menores,
+        aposentadosPensionistas,
         moradia,
         redeEletrica,
         redeEsgoto,
         ruaAsfaltada,
-        aguaEnc,
-        redeServ,
+        aguaEncanada,
+        redeServicos,
         computador,
         internet,
-        celCriAdo,
-        intCriAdo,
-        expTrbAdo,
-        bolsaFamiliaAtu,
-        bolsaFamiliaPas,
-        outroBen,
-        pessoasDef,
-        menores,
-        apoPens,
+        criancaAdolescentePossuiCelular,
+        criancaAdolescentePossuiInternet,
+        adolenscenteComExpDeTrabalho,
+        bolsaFamiliaAtualmente,
+        bolsaFamiliaAnteriormente,
+        outroBeneficio,
+        pessoasComDeficiencia,
       })
     );
   };
@@ -67,11 +67,9 @@ export const PesquisaSocial = () => {
       <div className={classes.form}>
         <FormLabel className={classes.label}>Chefe da Familia</FormLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
-          value={chefeFami}
+          value={chefeDaFamilia}
           onChange={(event: any) => {
-            setChefeFami(event.target.value);
+            setChefeFamilia(event.target.value);
           }}
           className={classes.input}
         >
@@ -83,7 +81,6 @@ export const PesquisaSocial = () => {
         </Select>
         <TextField
           className={classes.input}
-          name="menores"
           label="Quantidade de Menores de Idade"
           type="number"
           onChange={(event: any) => {
@@ -92,19 +89,16 @@ export const PesquisaSocial = () => {
         />
         <TextField
           className={classes.input}
-          name="apoPens"
           label="Quantidade de Aposentados/Pensionistas"
           type="number"
           onChange={(event: any) => {
-            setApoPens(event.target.value);
+            setAposentadosPensionistas(event.target.value);
           }}
         />
         <FormLabel className={classes.label}>
           Situação do Domicilio de Moradia
         </FormLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
           value={moradia}
           onChange={(event: any) => {
             setMoradia(event.target.value);
@@ -121,20 +115,17 @@ export const PesquisaSocial = () => {
           Rede Elétrica ?
         </FormLabel>
         <RadioGroup
-          aria-label="redeEletrica"
-          defaultValue="n"
           value={redeEletrica}
-          name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRedeEletrica("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRedeEletrica(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRedeEletrica("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRedeEletrica(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -142,20 +133,17 @@ export const PesquisaSocial = () => {
           Rede de Esgoto ?
         </FormLabel>
         <RadioGroup
-          aria-label="redeEsgoto"
-          defaultValue="n"
           value={redeEsgoto}
-          name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRedeEsgoto("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRedeEsgoto(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRedeEsgoto("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRedeEsgoto(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -163,20 +151,17 @@ export const PesquisaSocial = () => {
           Rua Asfaltada ?
         </FormLabel>
         <RadioGroup
-          aria-label="ruaAsfaltada"
-          defaultValue="n"
           value={ruaAsfaltada}
-          name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRuaAsfaltada("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRuaAsfaltada(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRuaAsfaltada("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRuaAsfaltada(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -184,20 +169,17 @@ export const PesquisaSocial = () => {
           Água Encanada ?
         </FormLabel>
         <RadioGroup
-          aria-label="aguaEnc"
-          defaultValue="n"
-          value={aguaEnc}
-          name="radio-buttons-group"
+          value={aguaEncanada}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setAguaEnc("s")} />}
+            value={true}
+            control={<Radio onClick={() => setAguaEncanada(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setAguaEnc("n")} />}
+            value={false}
+            control={<Radio onClick={() => setAguaEncanada(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -205,20 +187,17 @@ export const PesquisaSocial = () => {
           Rede de Serviços ?
         </FormLabel>
         <RadioGroup
-          aria-label="redeServ"
-          defaultValue="n"
-          value={redeServ}
-          name="radio-buttons-group"
+          value={redeServicos}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRedeServ("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRedeServicos(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRedeServ("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRedeServicos(false)} />}
             label="Não"
           />
           </RadioGroup>
@@ -226,20 +205,17 @@ export const PesquisaSocial = () => {
           Possui Computador ?
         </FormLabel>
         <RadioGroup
-          aria-label="computador"
-          defaultValue="n"
           value={computador}
-          name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setComputador("s")} />}
+            value={true}
+            control={<Radio onClick={() => setComputador(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setComputador("n")} />}
+            value={false}
+            control={<Radio onClick={() => setComputador(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -247,20 +223,17 @@ export const PesquisaSocial = () => {
             Possui Internet Banda Larga ?
           </FormLabel>
           <RadioGroup
-            aria-label="internet"
-            defaultValue="n"
             value={internet}
-            name="radio-buttons-group"
             row
           >
             <FormControlLabel
-              value="s"
-              control={<Radio onClick={() => setInternet("s")} />}
+              value={true}
+              control={<Radio onClick={() => setInternet(true)} />}
               label="Sim"
             />
             <FormControlLabel
-              value="n"
-              control={<Radio onClick={() => setInternet("n")} />}
+              value={false}
+              control={<Radio onClick={() => setInternet(false)} />}
               label="Não"
             />
         </RadioGroup>
@@ -268,20 +241,17 @@ export const PesquisaSocial = () => {
             Criança/Adolescente com Celular ?
           </FormLabel>
           <RadioGroup
-            aria-label="celCriAdo"
-            defaultValue="n"
-            value={celCriAdo}
-            name="radio-buttons-group"
+            value={criancaAdolescentePossuiCelular}
             row
           >
             <FormControlLabel
-              value="s"
-              control={<Radio onClick={() => setCelCriAdo("s")} />}
+              value={true}
+              control={<Radio onClick={() => setCriancaAdolescentePossuiCelulardo(true)} />}
               label="Sim"
             />
             <FormControlLabel
-              value="n"
-              control={<Radio onClick={() => setCelCriAdo("n")} />}
+              value={false}
+              control={<Radio onClick={() => setCriancaAdolescentePossuiCelulardo(false)} />}
               label="Não"
             />
         </RadioGroup>
@@ -289,20 +259,17 @@ export const PesquisaSocial = () => {
             Criança/Adolescente com Internet Móvel ?
           </FormLabel>
         <RadioGroup
-            aria-label="intCriAdo"
-            defaultValue="n"
-            value={intCriAdo}
-            name="radio-buttons-group"
+            value={criancaAdolescentePossuiInternet}
             row
           >
             <FormControlLabel
-              value="s"
-              control={<Radio onClick={() => setIntCriAdo("s")} />}
+              value={true}
+              control={<Radio onClick={() => setCriancaAdolescentePossuiInternet(true)} />}
               label="Sim"
             />
             <FormControlLabel
-              value="n"
-              control={<Radio onClick={() => setIntCriAdo("n")} />}
+              value={false}
+              control={<Radio onClick={() => setCriancaAdolescentePossuiInternet(false)} />}
               label="Não"
             />
         </RadioGroup>
@@ -310,20 +277,17 @@ export const PesquisaSocial = () => {
           Experiência de Trabalho Adolescente ?
         </FormLabel>
         <RadioGroup
-          aria-label="expTrbAdo"
-          defaultValue="n"
-          value={expTrbAdo}
-          name="radio-buttons-group"
+          value={adolenscenteComExpDeTrabalho}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setExpTrbAdo("s")} />}
+            value={true}
+            control={<Radio onClick={() => setAdolenscenteComExpDeTrabalho(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setExpTrbAdo("n")} />}
+            value={false}
+            control={<Radio onClick={() => setAdolenscenteComExpDeTrabalho(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -331,20 +295,17 @@ export const PesquisaSocial = () => {
           Possui Bolsa Família Atualmente ?
         </FormLabel>
         <RadioGroup
-          aria-label="bolsaFamiliaAtu"
-          defaultValue="n"
-          value={bolsaFamiliaAtu}
-          name="radio-buttons-group"
+          value={bolsaFamiliaAtualmente}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setBolsaFamiliaAtu("s")} />}
+            value={true}
+            control={<Radio onClick={() => setBolsaFamiliaAtualmente(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setBolsaFamiliaAtu("n")} />}
+            value={false}
+            control={<Radio onClick={() => setBolsaFamiliaAtualmente(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -352,20 +313,17 @@ export const PesquisaSocial = () => {
           Já possuiu Bolsa Família ?
         </FormLabel>
         <RadioGroup
-          aria-label="bolsaFamiliaPas"
-          defaultValue="n"
-          value={bolsaFamiliaPas}
-          name="radio-buttons-group"
+          value={bolsaFamiliaAnteriormente}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setBolsaFamiliaPas("s")} />}
+            value={true}
+            control={<Radio onClick={() => setBolsaFamiliaAnteriormente(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setBolsaFamiliaPas("n")} />}
+            value={false}
+            control={<Radio onClick={() => setBolsaFamiliaAnteriormente(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -373,20 +331,17 @@ export const PesquisaSocial = () => {
           Possui Outro Benefício ?
         </FormLabel>
         <RadioGroup
-          aria-label="probSaude"
-          defaultValue="n"
-          value={outroBen}
-          name="radio-buttons-group"
+          value={outroBeneficio}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setOutroBen("s")} />}
+            value={true}
+            control={<Radio onClick={() => setOutroBeneficio(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setOutroBen("n")} />}
+            value={false}
+            control={<Radio onClick={() => setOutroBeneficio(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -394,20 +349,17 @@ export const PesquisaSocial = () => {
           Pessoas com deficiência ?
         </FormLabel>
         <RadioGroup
-          aria-label="probSaude"
-          defaultValue="n"
-          value={pessoasDef}
-          name="radio-buttons-group"
+          value={pessoasComDeficiencia}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setPessoasDef("s")} />}
+            value={true}
+            control={<Radio onClick={() => setPessoasComDeficiencia(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setPessoasDef("n")} />}
+            value={false}
+            control={<Radio onClick={() => setPessoasComDeficiencia(false)} />}
             label="Não"
           />
         </RadioGroup>

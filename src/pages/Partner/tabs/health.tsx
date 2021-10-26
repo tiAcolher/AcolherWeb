@@ -13,46 +13,41 @@ import {
   Button,
 } from "@material-ui/core";
 
-import {
-  fatorRH,
-  necsEspecs,
-  localAcomp,
-  freqAcomp,
-} from "../../../constants";
+import { fatorRH, necsEspecs, localAcomp, freqAcomp } from "../../../constants";
 
 export const Saude = () => {
   const classes = useStyles();
   const [fator, setFator] = useState("");
   const [necessidades, setNecessidades] = useState("");
-  const [probSaude, setProbSaude] = useState("n");
-  const [nomeProbSaude, setNomeProbSaude] = useState("");
-  const [alergia, setAlergia] = useState("n");
-  const [nomeAlergia, setNomeAlergia] = useState();
-  const [restricaoAlimentar, setRestricaoAlimentar] = useState("n");
-  const [restAlimentar, setRestAlimentar] = useState("");
-  const [restricaoMed, setRestricaoMed] = useState("n");
-  const [restMed, setRestMed] = useState("");
-  const [acompMedico, setAcompMedico] = useState("n");
-  const [nomeMedico, setNomeMedico] = useState("n");
+  const [problemasDeSaude, setProblemasDeSaude] = useState(false);
+  const [qualProblemaDeSaude, setQualProblemaDeSaude] = useState("");
+  const [alergia, setAlergia] = useState(false);
+  const [qualAlergia, setQualAlergia] = useState();
+  const [restricaoAlimentar, setRestricaoAlimentar] = useState(false);
+  const [qualRestricaoAlimentar, setQualRestricaoAlimentar] = useState("");
+  const [restricaoMedicamentos, setRestricaoMedicamentos] = useState(false);
+  const [qualRestricaoMedicamentos, setQualRestricaoMedicamentos] = useState("");
+  const [acompanhamentoMedico, setAcompanhamentoMedico] = useState(false);
+  const [nomeDoMedico, setNomeDoMedico] = useState("");
   const [enfermidade, setEnfermidade] = useState("");
   const [acompanhamento, setAcompanhamento] = useState("");
- const  [frequencia, setFrequencia] = useState("");
+  const [frequencia, setFrequencia] = useState("");
 
   const handleSubmit = () => {
     console.log(
       JSON.stringify({
         fator,
         necessidades,
-        probSaude,
-        nomeProbSaude,
+        problemasDeSaude,
+        qualProblemaDeSaude,
         alergia,
-        nomeAlergia,
+        qualAlergia,
         restricaoAlimentar,
-        restAlimentar,
-        restricaoMed,
-        restMed,
-        acompMedico,
-        nomeMedico,
+        qualRestricaoAlimentar,
+        restricaoMedicamentos,
+        qualRestricaoMedicamentos,
+        acompanhamentoMedico,
+        nomeDoMedico,
         enfermidade,
         acompanhamento,
         frequencia,
@@ -62,215 +57,198 @@ export const Saude = () => {
 
   return (
     <div className={classes.container}>
-      <p>
-        Saúde
-      </p>
+      <p>Saúde</p>
       <div className={classes.form}>
-        <FormLabel className={classes.label}>Fator Sanguíneo :</FormLabel><Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={fator}
-            onChange={(event: any) => {
-              setFator(event.target.value);
-            }}
-            className={classes.input}
-          >
-            {fatorRH.map((item) => (
-              <MenuItem value={item.value} key={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormLabel className={classes.label}>Necessidades Especiais</FormLabel><Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={necessidades}
-            onChange={(event: any) => {
-              setNecessidades(event.target.value);
-            }}
-            className={classes.input}
-          >
-            {necsEspecs.map((item) => (
-              <MenuItem value={item.value} key={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
+        <FormLabel className={classes.label}>Fator Sanguíneo :</FormLabel>
+        <Select
+          value={fator}
+          onChange={(event: any) => {
+            setFator(event.target.value);
+          }}
+          className={classes.input}
+        >
+          {fatorRH.map((item) => (
+            <MenuItem value={item.value} key={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
+        </Select>
+        <FormLabel className={classes.label}>Necessidades Especiais</FormLabel>
+        <Select
+          value={necessidades}
+          onChange={(event: any) => {
+            setNecessidades(event.target.value);
+          }}
+          className={classes.input}
+        >
+          {necsEspecs.map((item) => (
+            <MenuItem value={item.value} key={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
         </Select>
         <FormLabel className={classes.label} component="legend">
           Problemas de Saúde ?
         </FormLabel>
-        <RadioGroup
-          aria-label="probSaude"
-          defaultValue="n"
-          value={probSaude}
-          name="radio-buttons-group"
-          row
-        >
+        <RadioGroup value={problemasDeSaude} row>
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setProbSaude("s")} />}
+            value={true}
+            control={<Radio onClick={() => setProblemasDeSaude(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setProbSaude("n")} />}
+            value={false}
+            control={<Radio onClick={() => setProblemasDeSaude(false)} />}
             label="Não"
           />
         </RadioGroup>
-        {probSaude === "s" &&
-              <TextField
-              className={classes.input}
-              name="nomeProbSaude"
-          label="Qual ?"
-          onChange={(event: any) => {
-                setNomeProbSaude(event.target.value);
-              } }
-        />}
+        {problemasDeSaude && (
+          <TextField
+            className={classes.input}
+            label="Qual ?"
+            onChange={(event: any) => {
+              setQualProblemaDeSaude(event.target.value);
+            }}
+          />
+        )}
         <FormLabel className={classes.label} component="legend">
           Alergia ?
         </FormLabel>
-        <RadioGroup
-          aria-label="alergia"
-          defaultValue="n"
-          value={alergia}
-          name="radio-buttons-group"
-          row
-        >
+        <RadioGroup value={alergia} row>
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setAlergia("s")} />}
+            value={true}
+            control={<Radio onClick={() => setAlergia(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setAlergia("n")} />}
+            value={false}
+            control={<Radio onClick={() => setAlergia(false)} />}
             label="Não"
           />
         </RadioGroup>
-        {alergia === "s" &&
-              <TextField
-              className={classes.input}
-              name="nomeAlergia"
-          label="Qual ?"
-          onChange={(event: any) => {
-                setNomeAlergia(event.target.value);
-              } }
-        />}
+        {alergia && (
+          <TextField
+            className={classes.input}
+            label="Qual ?"
+            onChange={(event: any) => {
+              setQualAlergia(event.target.value);
+            }}
+          />
+        )}
         <FormLabel className={classes.label} component="legend">
           Restrição Alimentar ?
         </FormLabel>
         <RadioGroup
-          aria-label="restricaoAlimentar"
-          defaultValue="n"
           value={restricaoAlimentar}
-          name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRestricaoAlimentar("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRestricaoAlimentar(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRestricaoAlimentar("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRestricaoAlimentar(false)} />}
             label="Não"
           />
         </RadioGroup>
-        {restricaoAlimentar === "s" &&
-              <TextField
-              className={classes.input}
-              name="restAlimentar"
-          label="Qual ?"
-          onChange={(event: any) => {
-                setRestAlimentar(event.target.value);
-              } }
-        />}
+        {restricaoAlimentar && (
+          <TextField
+            className={classes.input}
+            label="Qual ?"
+            onChange={(event: any) => {
+              setQualRestricaoAlimentar(event.target.value);
+            }}
+          />
+        )}
         <FormLabel className={classes.label} component="legend">
           Restrição a Medicação ?
         </FormLabel>
         <RadioGroup
-          aria-label="restricaoMed"
-          defaultValue="n"
-          value={restricaoMed}
-          name="radio-buttons-group"
+          value={restricaoMedicamentos}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRestricaoMed("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRestricaoMedicamentos(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRestricaoMed("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRestricaoMedicamentos(false)} />}
             label="Não"
           />
         </RadioGroup>
-         {restricaoMed === "s" &&
-              <TextField
-              className={classes.input}
-              name="restMed"
-          label="Qual ?"
-          onChange={(event: any) => {
-                setRestMed(event.target.value);
-              } }
-          />}
+        {restricaoMedicamentos  && (
+          <TextField
+            className={classes.input}
+            label="Qual ?"
+            onChange={(event: any) => {
+              setQualRestricaoMedicamentos(event.target.value);
+            }}
+          />
+        )}
         <FormLabel className={classes.label} component="legend">
           Acompanhamento Medico ?
         </FormLabel>
         <RadioGroup
-          aria-label="acompMedico"
-          defaultValue="n"
-          value={acompMedico}
-          name="radio-buttons-group"
+          value={acompanhamentoMedico}
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setAcompMedico("s")} />}
+            value={true}
+            control={<Radio onClick={() => setAcompanhamentoMedico(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setAcompMedico("n")} />}
+            value={false}
+            control={<Radio onClick={() => setAcompanhamentoMedico(false)} />}
             label="Não"
           />
-          </RadioGroup>       
-          {acompMedico === "s" &&
-              <><><TextField
-            className={classes.input}
-            name="nomeMedico"
-            label="Quem ?"
-            onChange={(event: any) => {
-              setNomeMedico(event.target.value);
-            } } /><TextField
-              className={classes.input}
-              name="enfermidade"
-              label="Enfermidade"
-              onChange={(event: any) => {
-                setEnfermidade(event.target.value);
-              } } /></><FormLabel className={classes.label}>Local de Acompanhamento</FormLabel><Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
-                value={acompanhamento}
-                onChange={(event: any) => {
-                  setAcompanhamento(event.target.value);
-                } }
+        </RadioGroup>
+        {acompanhamentoMedico && (
+          <>
+            <>
+              <TextField
                 className={classes.input}
-              >
+                label="Quem ?"
+                onChange={(event: any) => {
+                  setNomeDoMedico(event.target.value);
+                }}
+              />
+              <TextField
+                className={classes.input}
+                label="Enfermidade"
+                onChange={(event: any) => {
+                  setEnfermidade(event.target.value);
+                }}
+              />
+            </>
+            <FormLabel className={classes.label}>
+              Local de Acompanhamento
+            </FormLabel>
+            <Select
+              value={acompanhamento}
+              onChange={(event: any) => {
+                setAcompanhamento(event.target.value);
+              }}
+              className={classes.input}
+            >
               {localAcomp.map((item) => (
                 <MenuItem value={item.value} key={item.value}>
                   {item.label}
                 </MenuItem>
               ))}
-            </Select><FormLabel className={classes.label}>Frequencia do Acompanhamento</FormLabel><Select
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
+            </Select>
+            <FormLabel className={classes.label}>
+              Frequencia do Acompanhamento
+            </FormLabel>
+            <Select
               value={frequencia}
               onChange={(event: any) => {
                 setFrequencia(event.target.value);
-              } }
+              }}
               className={classes.input}
             >
               {freqAcomp.map((item) => (
@@ -278,8 +256,9 @@ export const Saude = () => {
                   {item.label}
                 </MenuItem>
               ))}
-            </Select></>
-          }           
+            </Select>
+          </>
+        )}
         <Button
           onClick={handleSubmit}
           className={classes.button}

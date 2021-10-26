@@ -41,6 +41,7 @@ export const DadosPessoais = () => {
   const [logradouro, setLogradouro] = useState("");
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
+  const [cep, setCep] = useState("");
   const [bairro, setBairro] = useState("");
   const [telFixo, setTelFixo] = useState("");
   const [celular, setCelular] = useState("");
@@ -58,9 +59,13 @@ export const DadosPessoais = () => {
         rg,
         cpf,
         isFederated,
+        clube,
+        modalidade,
+        dtInicio,
         logradouro,
         numero,
         complemento,
+        cep,
         bairro,
         uf,
         cidade,
@@ -69,11 +74,8 @@ export const DadosPessoais = () => {
         email,
         escola,
         escolaridade,
-        serie,
         turno,
-        clube,
-        modalidade,
-        dtInicio,
+        serie,
       })
     );
   };
@@ -84,7 +86,6 @@ export const DadosPessoais = () => {
       <div className={classes.form}>
         <TextField
           className={classes.input}
-          name="nome"
           label="Nome Completo"
           onChange={(event: any) => {
             setNome(event.target.value);
@@ -93,13 +94,7 @@ export const DadosPessoais = () => {
         <FormLabel className={classes.label} component="legend">
           Gênero
         </FormLabel>
-        <RadioGroup
-          aria-label="genero"
-          defaultValue="f"
-          value={genero}
-          name="radio-buttons-group"
-          row
-        >
+        <RadioGroup value={genero} row>
           <FormControlLabel
             value="f"
             control={<Radio onClick={() => setGenero("f")} />}
@@ -117,7 +112,6 @@ export const DadosPessoais = () => {
           />
         </RadioGroup>
         <TextField
-          name="dataNascimento"
           type="date"
           label="Data de Nascimento"
           className={classes.input}
@@ -129,7 +123,6 @@ export const DadosPessoais = () => {
         />
         <TextField
           className={classes.input}
-          name="rg"
           label="RG"
           onChange={(event: any) => {
             setRg(event.target.value);
@@ -142,12 +135,7 @@ export const DadosPessoais = () => {
           }}
         >
           {() => (
-            <TextField
-              className={classes.input}
-              label="CPF"
-              name="cpf"
-              type="text"
-            />
+            <TextField className={classes.input} label="CPF" type="text" />
           )}
         </ReactInputMask>
         <FormControlLabel
@@ -170,7 +158,6 @@ export const DadosPessoais = () => {
         <p>Endereço</p>
         <TextField
           className={classes.input}
-          name="logradouro"
           label="Logradouro"
           onChange={(event: any) => {
             setLogradouro(event.target.value);
@@ -178,7 +165,6 @@ export const DadosPessoais = () => {
         />
         <TextField
           className={classes.input}
-          name="numero"
           label="Número"
           type="number"
           onChange={(event: any) => {
@@ -187,17 +173,24 @@ export const DadosPessoais = () => {
         />
         <TextField
           className={classes.input}
-          name="complemento"
           label="Complemento"
           onChange={(event: any) => {
             setComplemento(event.target.value);
           }}
         />
-        <ReactInputMask mask="99999-999">
-          {() => <TextField className={classes.input} name="cep" label="CEP" />}
+        <ReactInputMask mask="99999-999"
+         onChange={(event: any) => {
+                setCep(event.target.value);
+              }}
+        >
+          {() => (
+            <TextField
+              className={classes.input}
+              label="CEP"             
+            />
+          )}
         </ReactInputMask>
         <TextField
-          name="bairro"
           label="Bairro"
           className={classes.input}
           onChange={(event: any) => {
@@ -206,8 +199,6 @@ export const DadosPessoais = () => {
         />
         <FormLabel className={classes.label}>Estado</FormLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
           value={uf}
           onChange={(event: any) => {
             setUf(event.target.value);
@@ -220,11 +211,9 @@ export const DadosPessoais = () => {
             </MenuItem>
           ))}
         </Select>
-        <FormLabel className={classes.label}>Cidades</FormLabel>
+        <FormLabel className={classes.label}>Cidade</FormLabel>
         <Select
           className={classes.input}
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
           value={cidade}
           onChange={(event: any) => {
             setCidade(event.target.value);
@@ -245,13 +234,7 @@ export const DadosPessoais = () => {
             setTelFixo(event.target.value);
           }}
         >
-          {() => (
-            <TextField
-              className={classes.input}
-              name="telFixo"
-              label="Telefone Fixo"
-            />
-          )}
+          {() => <TextField className={classes.input} label="Telefone Fixo" />}
         </ReactInputMask>
         <ReactInputMask
           mask="(99) 9 9999-9999"
@@ -259,26 +242,18 @@ export const DadosPessoais = () => {
             setCelular(event.target.value);
           }}
         >
-          {() => (
-            <TextField
-              className={classes.input}
-              name="celular"
-              label="Celular"
-            />
-          )}
+          {() => <TextField className={classes.input} label="Celular" />}
         </ReactInputMask>
         <TextField
           onChange={(event: any) => {
             setEmail(event.target.value);
           }}
           className={classes.input}
-          name="email"
           label="Email"
         />
         <p>Dados Escolares</p>
         <TextField
           className={classes.input}
-          name="escola"
           label="Nome da Escola"
           onChange={(event: any) => {
             setEscola(event.target.value);
@@ -287,8 +262,6 @@ export const DadosPessoais = () => {
         <FormLabel className={classes.label}>Escolaridade</FormLabel>
         <Select
           className={classes.input}
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
           value={escolaridade}
           onChange={(event: any) => {
             setEscolaridade(event.target.value);

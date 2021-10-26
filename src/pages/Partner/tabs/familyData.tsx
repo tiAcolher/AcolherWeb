@@ -17,21 +17,21 @@ import { registroDeGuarda } from "../../../constants";
 
 export const FamilyData = () => {
   const classes = useStyles();
-  const [nomeMae, setNomeMae] = useState("");
-  const [dataNascMae, setDataNascMae] = useState("");
-  const [profissaoMae, setProfissaoMae] = useState("");
-  const [nomePai, setNomePai] = useState("");
-  const [dataNascPai, setDataNascPai] = useState("");
-  const [profissaoPai, setProfissaoPai] = useState("");
-  const [paisSep, setPaisSep] = useState("n");
-  const [paisVivos, setPaisVivos] = useState("s");
-  const [recPens, setRecPens] = useState(false);
-  const [respLegal, setRespLegal] = useState("");
-  const [dataNascrespLegal, setDataNascrespLegal] = useState("");
-  const [grauParentesco, setGrauParentesco] = useState<string>();
-  const [registroGuarda, setRegistroGuarda] = useState("n");
-  const [tipoRegistro, setTipoRegistro] = useState("Registro de Guarda");
-  const [numPessoas, setNumPessoas] = useState<number>();
+  const [nomeDaMae, setNomeDaMae] = useState("");
+  const [dataDeNascimentoDaMae, setDataDeNascimentoDaMae] = useState("");
+  const [profissaoDaMae, setProfissaoDaMae] = useState("");
+  const [nomeDoPai, setNomeDoPai] = useState("");
+  const [dataDeNascimentoDoPai, setDataDeNascimentoDoPai] = useState("");
+  const [profissaoDoPai, setProfissaoDoPai] = useState("");
+  const [paisSeparados, setPaisSeparados] = useState(false);
+  const [paisVivos, setPaisVivos] = useState(true);
+  const [criancaRecebePensao, setCriancaRecebePensao] = useState(false);
+  const [responsavelLegal, setResponsavelLegal] = useState("");
+  const [dataDeNascimentoDoResponsavelLegal, setDataDeNascimentoDoResponsavelLegal] = useState("");
+  const [grauDeParentesco, setGrauDeParentesco] = useState("");
+  const [registroGuarda, setRegistroGuarda] = useState(false);
+  const [tipoDeRegistroDeGuarda, setTipoDeRegistroDeGuarda] = useState("");
+  const [numeroDePessoasNaFamilia, setNumeroDePessoasNaFamilia] = useState(0);
   const [familyMembers, setFamilyMembers] = useState<
     Partial<Array<{ nome: string; parentesco: string }>>
   >([]);
@@ -39,33 +39,34 @@ export const FamilyData = () => {
   const handleSubmit = () => {
     console.log(
       JSON.stringify({
-        nomeMae,
-        dataNascMae,
-        profissaoMae,
-        nomePai,
-        dataNascPai,
-        profissaoPai,
-        paisSep,
+        nomeDaMae,
+        dataDeNascimentoDaMae,
+        profissaoDaMae,
+        nomeDoPai,
+        dataDeNascimentoDoPai,
+        profissaoDoPai,
+        paisSeparados,
         paisVivos,
-        recPens,
-        respLegal,
-        dataNascrespLegal,
-        grauParentesco,
+        criancaRecebePensao,
+        responsavelLegal,
+        dataDeNascimentoDoResponsavelLegal,
+        grauDeParentesco,
         registroGuarda,
-        tipoRegistro,
-        numPessoas,
+        tipoDeRegistroDeGuarda,
+        numeroDePessoasNaFamilia,
         parentesco: familyMembers,
       })
     );
   };
 
   useEffect(() => {
-    if (numPessoas > familyMembers.length) {
+    if (numeroDePessoasNaFamilia > familyMembers.length) {
       setFamilyMembers(familyMembers.concat({ nome: "", parentesco: "" }));
     } else {
       setFamilyMembers(familyMembers.slice(0, familyMembers.length - 1));
     }
-  }, [numPessoas]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [numeroDePessoasNaFamilia]);
 
   const showFamilyMember = () => {
     let arr = familyMembers;
@@ -102,76 +103,69 @@ export const FamilyData = () => {
       <div className={classes.form}>
         <TextField
           className={classes.input}
-          name="mae"
           label="Nome da Mãe"
           onChange={(event: any) => {
-            setNomeMae(event.target.value);
+            setNomeDaMae(event.target.value);
           }}
         />
         <TextField
-          name="dataNascMae"
           type="date"
           label="Data de Nascimento da Mãe"
           className={classes.input}
           InputLabelProps={{ shrink: true }}
-          value={dataNascMae}
+          value={dataDeNascimentoDaMae}
           onChange={(event: any) => {
-            setDataNascMae(event.target.value);
+            setDataDeNascimentoDaMae(event.target.value);
           }}
         />
         <TextField
           className={classes.input}
-          name="profissaoMae"
           label="Profissão da Mãe"
           onChange={(event: any) => {
-            setProfissaoMae(event.target.value);
+            setProfissaoDaMae(event.target.value);
           }}
         />
         <TextField
           className={classes.input}
-          name="Pai"
           label="Nome do Pai"
           onChange={(event: any) => {
-            setNomePai(event.target.value);
+            setNomeDoPai(event.target.value);
           }}
         />
         <TextField
-          name="dataNascPai"
           type="date"
           label="Data de Nascimento da Pai"
           className={classes.input}
           InputLabelProps={{ shrink: true }}
-          value={dataNascPai}
+          value={dataDeNascimentoDoPai}
           onChange={(event: any) => {
-            setDataNascPai(event.target.value);
+            setDataDeNascimentoDoPai(event.target.value);
           }}
         />
         <TextField
           className={classes.input}
-          name="profissaoPai"
           label="Profissão da Pai"
           onChange={(event: any) => {
-            setProfissaoPai(event.target.value);
+            setProfissaoDoPai(event.target.value);
           }}
         />
         <FormLabel className={classes.label} component="legend">
           Pais Separados ?
         </FormLabel>
         <RadioGroup
-          aria-label="paisSep"
           defaultValue="n"
-          value={paisSep}
+          value={paisSeparados}
           name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setPaisSep("s")} />}
+            value={true}
+            control={<Radio onClick={() => setPaisSeparados(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setPaisSep("n")} />}
+            value={false}
+            control={<Radio onClick={() => setPaisSeparados(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -179,20 +173,17 @@ export const FamilyData = () => {
           Pais Vivos ?
         </FormLabel>
         <RadioGroup
-          aria-label="paisSep"
-          defaultValue="s"
           value={paisVivos}
-          name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setPaisVivos("s")} />}
+            value={true}
+            control={<Radio onClick={() => setPaisVivos(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setPaisVivos("n")} />}
+            value={false}
+            control={<Radio onClick={() => setPaisVivos(false)} />}
             label="Não"
           />
         </RadioGroup>
@@ -200,22 +191,22 @@ export const FamilyData = () => {
           Criança Recebe Pensão ?
         </FormLabel>
         <RadioGroup
-          aria-label="paisSep" // EU NEM SEI QUE PIADA EU POSSO FAZER SOBRE ISSO DE TÃO PATÉTICO
-          defaultValue="n"
-          value={recPens}
+          value={criancaRecebePensao}
           name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            control={<Radio onClick={() => setRecPens(true)} />}
+            value={true}
+            control={<Radio onClick={() => setCriancaRecebePensao(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            control={<Radio onClick={() => setRecPens(false)} />}
+            value={false}
+            control={<Radio onClick={() => setCriancaRecebePensao(false)} />}
             label="Não"
           />
         </RadioGroup>
-        {recPens && (
+        {criancaRecebePensao && (
           <TextField
             className={classes.input}
             name="justifPens"
@@ -226,7 +217,7 @@ export const FamilyData = () => {
           className={classes.input}
           label="Responsável Legal"
           onChange={(event: any) => {
-            setRespLegal(event.target.value);
+            setResponsavelLegal(event.target.value);
           }}
         />
         <TextField
@@ -234,48 +225,46 @@ export const FamilyData = () => {
           label="Data de Nascimento do Responável Legal"
           className={classes.input}
           InputLabelProps={{ shrink: true }}
-          value={dataNascrespLegal}
+          value={dataDeNascimentoDoResponsavelLegal}
           onChange={(event: any) => {
-            setDataNascrespLegal(event.target.value);
+            setDataDeNascimentoDoResponsavelLegal(event.target.value);
           }}
         />
         <TextField
           className={classes.input}
           label="Grau de Parentesco"
           onChange={(event: any) => {
-            setGrauParentesco(event.target.value);
+            setGrauDeParentesco(event.target.value);
           }}
         />
         <FormLabel className={classes.label} component="legend">
           Possui Registro de Guarda ?
         </FormLabel>
         <RadioGroup
-          aria-label="registroGuarda"
-          defaultValue="n"
           value={registroGuarda}
           name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRegistroGuarda("s")} />}
+            value={true}
+            control={<Radio onClick={() => setRegistroGuarda(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRegistroGuarda("n")} />}
+            value={false}
+            control={<Radio onClick={() => setRegistroGuarda(false)} />}
             label="Não"
           />
         </RadioGroup>
-        {registroGuarda === "s" && (
+        {registroGuarda  && (
           <>
             <FormLabel className={classes.label}>Tipo de Registro :</FormLabel>
             <Select
               labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
-              value={tipoRegistro}
+              value={tipoDeRegistroDeGuarda}
               onChange={(event: any) => {
-                setTipoRegistro(event.target.value);
+                setTipoDeRegistroDeGuarda(event.target.value);
               }}
               className={classes.input}
             >
@@ -290,12 +279,11 @@ export const FamilyData = () => {
         <p>Dados da Família</p>
         <TextField
           className={classes.input}
-          name="numPessoas"
           label="Número de Pessoas na Família"
           type="number"
           InputProps={{ inputProps: { min: 0 } }}
           onChange={(event: any) => {
-            setNumPessoas(event.target.value);
+            setNumeroDePessoasNaFamilia(event.target.value);
           }}
         />
 
