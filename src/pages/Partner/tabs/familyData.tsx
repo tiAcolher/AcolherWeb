@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createStyles,
   makeStyles,
@@ -13,11 +13,9 @@ import {
   Button,
 } from "@material-ui/core";
 
-import {
-  registroDeGuarda
-} from "../../../constants";
+import { registroDeGuarda } from "../../../constants";
 
-export const RespFamilia = () => {
+export const FamilyData = () => {
   const classes = useStyles();
   const [nomeMae, setNomeMae] = useState("");
   const [dataNascMae, setDataNascMae] = useState("");
@@ -27,14 +25,16 @@ export const RespFamilia = () => {
   const [profissaoPai, setProfissaoPai] = useState("");
   const [paisSep, setPaisSep] = useState("n");
   const [paisVivos, setPaisVivos] = useState("s");
-  const [recPens, setRecPens] = useState("n");
+  const [recPens, setRecPens] = useState(false);
   const [respLegal, setRespLegal] = useState("");
   const [dataNascrespLegal, setDataNascrespLegal] = useState("");
-  const [grauParentesco, setGrauParentesco] = useState("");
-  const [registroGuarda, setRegistroGuarda] = useState("n");  
+  const [grauParentesco, setGrauParentesco] = useState<string>();
+  const [registroGuarda, setRegistroGuarda] = useState("n");
   const [tipoRegistro, setTipoRegistro] = useState("Registro de Guarda");
-  const [numPessoas, setNumPessoas] = useState("");
-  const [parentesco, setParentesco] = useState("");
+  const [numPessoas, setNumPessoas] = useState<number>();
+  const [familyMembers, setFamilyMembers] = useState<
+    Partial<Array<{ nome: string; parentesco: string }>>
+  >([]);
 
   const handleSubmit = () => {
     console.log(
@@ -54,16 +54,51 @@ export const RespFamilia = () => {
         registroGuarda,
         tipoRegistro,
         numPessoas,
-        parentesco,
+        parentesco: familyMembers,
       })
     );
   };
 
+  useEffect(() => {
+    if (numPessoas > familyMembers.length) {
+      setFamilyMembers(familyMembers.concat({ nome: "", parentesco: "" }));
+    } else {
+      setFamilyMembers(familyMembers.slice(0, familyMembers.length - 1));
+    }
+  }, [numPessoas]);
+
+  const showFamilyMember = () => {
+    let arr = familyMembers;
+    return arr.map((item) => (
+      <>
+        <TextField
+          className={classes.input}
+          label="Nome"
+          onChange={(event: any) => {
+            item.nome = event.target.value;
+            setFamilyMembers(arr);
+          }}
+        />
+
+        <TextField
+          className={classes.input}
+          label="Parentesco"
+          onChange={(event: any) => {
+            item.parentesco = event.target.value;
+            setFamilyMembers(arr);
+          }}
+        />
+      </>
+    ));
+  };
+
+  useEffect(() => {
+    console.log(JSON.stringify(familyMembers));
+  }, [familyMembers]);
+
   return (
     <div className={classes.container}>
-      <p>
-        Filiação e Responsável Legal
-      </p>
+      <p>Filiação e Responsável Legal</p>
       <div className={classes.form}>
         <TextField
           className={classes.input}
@@ -90,7 +125,7 @@ export const RespFamilia = () => {
           label="Profissão da Mãe"
           onChange={(event: any) => {
             setProfissaoMae(event.target.value);
-          }}          
+          }}
         />
         <TextField
           className={classes.input}
@@ -117,7 +152,7 @@ export const RespFamilia = () => {
           label="Profissão da Pai"
           onChange={(event: any) => {
             setProfissaoPai(event.target.value);
-          }}          
+          }}
         />
         <FormLabel className={classes.label} component="legend">
           Pais Separados ?
@@ -139,8 +174,8 @@ export const RespFamilia = () => {
             control={<Radio onClick={() => setPaisSep("n")} />}
             label="Não"
           />
-          </RadioGroup>
-       <FormLabel className={classes.label} component="legend">
+        </RadioGroup>
+        <FormLabel className={classes.label} component="legend">
           Pais Vivos ?
         </FormLabel>
         <RadioGroup
@@ -165,39 +200,36 @@ export const RespFamilia = () => {
           Criança Recebe Pensão ?
         </FormLabel>
         <RadioGroup
-          aria-label="paisSep"
+          aria-label="paisSep" // EU NEM SEI QUE PIADA EU POSSO FAZER SOBRE ISSO DE TÃO PATÉTICO
           defaultValue="n"
           value={recPens}
           name="radio-buttons-group"
           row
         >
           <FormControlLabel
-            value="s"
-            control={<Radio onClick={() => setRecPens("s")} />}
+            control={<Radio onClick={() => setRecPens(true)} />}
             label="Sim"
           />
           <FormControlLabel
-            value="n"
-            control={<Radio onClick={() => setRecPens("n")} />}
+            control={<Radio onClick={() => setRecPens(false)} />}
             label="Não"
           />
         </RadioGroup>
-          {recPens === "s" &&
-              <TextField
-              className={classes.input}
-              name="justifPens"
-              label="Justificativa da Pensão"
-          />}
+        {recPens && (
+          <TextField
+            className={classes.input}
+            name="justifPens"
+            label="Justificativa da Pensão"
+          />
+        )}
         <TextField
           className={classes.input}
-          name="respLegal"
           label="Responsável Legal"
           onChange={(event: any) => {
             setRespLegal(event.target.value);
           }}
         />
         <TextField
-          name="dataNascrespLegal"
           type="date"
           label="Data de Nascimento do Responável Legal"
           className={classes.input}
@@ -209,7 +241,6 @@ export const RespFamilia = () => {
         />
         <TextField
           className={classes.input}
-          name="grauParentesco"
           label="Grau de Parentesco"
           onChange={(event: any) => {
             setGrauParentesco(event.target.value);
@@ -236,42 +267,40 @@ export const RespFamilia = () => {
             label="Não"
           />
         </RadioGroup>
-          {registroGuarda === "s" &&
-        <><FormLabel className={classes.label}>Tipo de Registro :</FormLabel><Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={tipoRegistro}
-            onChange={(event: any) => {
-              setTipoRegistro(event.target.value);
-            }}
-            className={classes.input}
-          >
-            {registroDeGuarda.map((item) => (
-              <MenuItem value={item.value} key={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </Select></>}
+        {registroGuarda === "s" && (
+          <>
+            <FormLabel className={classes.label}>Tipo de Registro :</FormLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={tipoRegistro}
+              onChange={(event: any) => {
+                setTipoRegistro(event.target.value);
+              }}
+              className={classes.input}
+            >
+              {registroDeGuarda.map((item) => (
+                <MenuItem value={item.value} key={item.value}>
+                  {item.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </>
+        )}
         <p>Dados da Família</p>
         <TextField
-              className={classes.input}
-              name="numPessoas"
-              label="Número de Pessoas na Família"
-              type="number"
-              onChange={(event: any) => {
-              setNumPessoas(event.target.value);
-            }}
-            />
-            <TextField className={classes.input} name="nomes" label="Nome" />
-            <div className={classes.input}></div>
-            <TextField
-              className={classes.input}
-              name="parentesco"
-              label="Parentesco"
-              onChange={(event: any) => {
-              setParentesco(event.target.value);
-            } }
-            />
+          className={classes.input}
+          name="numPessoas"
+          label="Número de Pessoas na Família"
+          type="number"
+          InputProps={{ inputProps: { min: 0 } }}
+          onChange={(event: any) => {
+            setNumPessoas(event.target.value);
+          }}
+        />
+
+        {showFamilyMember()}
+
         <Button
           onClick={handleSubmit}
           className={classes.button}

@@ -4,7 +4,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import { DadosPessoais } from "../tabs/personalData";
-import { RespFamilia } from "../tabs/familyData";
+import { FamilyData } from "../tabs/familyData";
 import { Saude } from "../tabs/health";
 import { PesquisaSocial } from "../tabs/socialResearch";
 import Main from "../../../components/Main";
@@ -68,7 +68,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <RespFamilia/>
+          <FamilyData />
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
@@ -80,7 +80,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <Saude/>
+          <Saude />
         </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
@@ -92,7 +92,7 @@ const PartnerForm = (): JSX.Element => {
             marginLeft: "15%",
           }}
         >
-          <PesquisaSocial/>
+          <PesquisaSocial />
         </div>
       </TabPanel>
     </div>

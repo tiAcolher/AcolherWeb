@@ -16,8 +16,6 @@ import EditIcon from "@material-ui/icons/Edit";
 import { useHistory } from "react-router-dom";
 import Main from "../../../components/Main";
 
-
-  
 const PartnerList = (): JSX.Element => {
   const classes = useStyles();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,18 +50,17 @@ const PartnerList = (): JSX.Element => {
       parent: "Paula",
       parentPhone: "22 2222-2222",
     },
-];
+  ];
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  
 
   const history = useHistory();
 
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState<string>("");
   const [list, setList] = React.useState(mockPartnerList);
 
   useEffect(() => {
-    if (search !== "") {
+    if (search.length) {
       let newList = mockPartnerList.filter((item) =>
         item.name.toUpperCase().includes(search.toUpperCase())
       );
@@ -99,6 +96,7 @@ const PartnerList = (): JSX.Element => {
           onClick={() => history.push("createPartner")}
           className={classes.addButton}
         />
+
         <List style={{ marginTop: 32 }}>
           {list.map((partner) => (
             <Card className={classes.card}>

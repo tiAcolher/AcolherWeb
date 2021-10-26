@@ -41,10 +41,13 @@ export const DadosPessoais = () => {
   const [logradouro, setLogradouro] = useState("");
   const [numero, setNumero] = useState("");
   const [complemento, setComplemento] = useState("");
-  const [bairro, setBairro] = useState("");  
+  const [bairro, setBairro] = useState("");
   const [telFixo, setTelFixo] = useState("");
   const [celular, setCelular] = useState("");
   const [escola, setEscola] = useState("");
+  const [clube, setClube] = useState("");
+  const [modalidade, setModalidade] = useState("");
+  const [dtInicio, setDtInicio] = useState("");
 
   const handleSubmit = () => {
     console.log(
@@ -68,6 +71,9 @@ export const DadosPessoais = () => {
         escolaridade,
         serie,
         turno,
+        clube,
+        modalidade,
+        dtInicio,
       })
     );
   };
@@ -153,8 +159,14 @@ export const DadosPessoais = () => {
           }
           label="Atleta Federado"
         />
-        {/* TODO: GRAVAR DADOS FEDERATEDFORM */}
-        {isFederated && <FederatedForm />}
+        {isFederated && (
+          <FederatedForm
+            titulo="Dados Federado"
+            setClube={setClube}
+            setModalidade={setModalidade}
+            setDtInicio={setDtInicio}
+          />
+        )}
         <p>Endereço</p>
         <TextField
           className={classes.input}
