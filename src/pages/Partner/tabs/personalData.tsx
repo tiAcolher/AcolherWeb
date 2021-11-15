@@ -11,7 +11,6 @@ import {
   Checkbox,
   Select,
   MenuItem,
-  Button,
 } from "@material-ui/core";
 
 import { Locations } from "../../../location";
@@ -23,7 +22,7 @@ import {
   turnos,
 } from "../../../constants";
 
-export const DadosPessoais = () => {
+export const DadosPessoais = ({ setPersonalData }) => {
   const classes = useStyles();
 
   const [isFederated, setFederated] = useState(false);
@@ -49,36 +48,6 @@ export const DadosPessoais = () => {
   const [clube, setClube] = useState("");
   const [modalidade, setModalidade] = useState("");
   const [dtInicio, setDtInicio] = useState("");
-
-  const handleSubmit = () => {
-    console.log(
-      JSON.stringify({
-        nome,
-        genero,
-        dtNascimento,
-        rg,
-        cpf,
-        isFederated,
-        clube,
-        modalidade,
-        dtInicio,
-        logradouro,
-        numero,
-        complemento,
-        cep,
-        bairro,
-        uf,
-        cidade,
-        telFixo,
-        celular,
-        email,
-        escola,
-        escolaridade,
-        turno,
-        serie,
-      })
-    );
-  };
 
   return (
     <div className={classes.container}>
@@ -178,17 +147,13 @@ export const DadosPessoais = () => {
             setComplemento(event.target.value);
           }}
         />
-        <ReactInputMask mask="99999-999"
-         onChange={(event: any) => {
-                setCep(event.target.value);
-              }}
+        <ReactInputMask
+          mask="99999-999"
+          onChange={(event: any) => {
+            setCep(event.target.value);
+          }}
         >
-          {() => (
-            <TextField
-              className={classes.input}
-              label="CEP"             
-            />
-          )}
+          {() => <TextField className={classes.input} label="CEP" />}
         </ReactInputMask>
         <TextField
           label="Bairro"
@@ -305,14 +270,6 @@ export const DadosPessoais = () => {
             </MenuItem>
           ))}
         </Select>
-        <Button
-          onClick={handleSubmit}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-        >
-          Salvar
-        </Button>
       </div>
     </div>
   );

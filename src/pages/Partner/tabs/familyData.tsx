@@ -27,7 +27,10 @@ export const FamilyData = () => {
   const [paisVivos, setPaisVivos] = useState(true);
   const [criancaRecebePensao, setCriancaRecebePensao] = useState(false);
   const [responsavelLegal, setResponsavelLegal] = useState("");
-  const [dataDeNascimentoDoResponsavelLegal, setDataDeNascimentoDoResponsavelLegal] = useState("");
+  const [
+    dataDeNascimentoDoResponsavelLegal,
+    setDataDeNascimentoDoResponsavelLegal,
+  ] = useState("");
   const [grauDeParentesco, setGrauDeParentesco] = useState("");
   const [registroGuarda, setRegistroGuarda] = useState(false);
   const [tipoDeRegistroDeGuarda, setTipoDeRegistroDeGuarda] = useState("");
@@ -65,7 +68,7 @@ export const FamilyData = () => {
     } else {
       setFamilyMembers(familyMembers.slice(0, familyMembers.length - 1));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numeroDePessoasNaFamilia]);
 
   const showFamilyMember = () => {
@@ -172,10 +175,7 @@ export const FamilyData = () => {
         <FormLabel className={classes.label} component="legend">
           Pais Vivos ?
         </FormLabel>
-        <RadioGroup
-          value={paisVivos}
-          row
-        >
+        <RadioGroup value={paisVivos} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setPaisVivos(true)} />}
@@ -190,11 +190,7 @@ export const FamilyData = () => {
         <FormLabel className={classes.label} component="legend">
           Criança Recebe Pensão ?
         </FormLabel>
-        <RadioGroup
-          value={criancaRecebePensao}
-          name="radio-buttons-group"
-          row
-        >
+        <RadioGroup value={criancaRecebePensao} name="radio-buttons-group" row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setCriancaRecebePensao(true)} />}
@@ -240,11 +236,7 @@ export const FamilyData = () => {
         <FormLabel className={classes.label} component="legend">
           Possui Registro de Guarda ?
         </FormLabel>
-        <RadioGroup
-          value={registroGuarda}
-          name="radio-buttons-group"
-          row
-        >
+        <RadioGroup value={registroGuarda} name="radio-buttons-group" row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRegistroGuarda(true)} />}
@@ -256,7 +248,7 @@ export const FamilyData = () => {
             label="Não"
           />
         </RadioGroup>
-        {registroGuarda  && (
+        {registroGuarda && (
           <>
             <FormLabel className={classes.label}>Tipo de Registro :</FormLabel>
             <Select
@@ -288,15 +280,6 @@ export const FamilyData = () => {
         />
 
         {showFamilyMember()}
-
-        <Button
-          onClick={handleSubmit}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-        >
-          Salvar
-        </Button>
       </div>
     </div>
   );

@@ -10,9 +10,7 @@ import {
   FormControlLabel,
   Select,
   MenuItem,
-  Button,
 } from "@material-ui/core";
-
 import { domicilio, chefeFamilia } from "../../../constants";
 
 export const PesquisaSocial = () => {
@@ -26,40 +24,23 @@ export const PesquisaSocial = () => {
   const [ruaAsfaltada, setRuaAsfaltada] = useState(true);
   const [aguaEncanada, setAguaEncanada] = useState(true);
   const [redeServicos, setRedeServicos] = useState(true);
-  const [computador, setComputador] = useState(true);  
+  const [computador, setComputador] = useState(true);
   const [internet, setInternet] = useState(true);
-  const [criancaAdolescentePossuiCelular, setCriancaAdolescentePossuiCelulardo] = useState(true);
-  const [criancaAdolescentePossuiInternet, setCriancaAdolescentePossuiInternet] = useState(true);  
-  const [adolenscenteComExpDeTrabalho, setAdolenscenteComExpDeTrabalho] = useState(true);
+  const [
+    criancaAdolescentePossuiCelular,
+    setCriancaAdolescentePossuiCelulardo,
+  ] = useState(true);
+  const [
+    criancaAdolescentePossuiInternet,
+    setCriancaAdolescentePossuiInternet,
+  ] = useState(true);
+  const [adolenscenteComExpDeTrabalho, setAdolenscenteComExpDeTrabalho] =
+    useState(true);
   const [bolsaFamiliaAtualmente, setBolsaFamiliaAtualmente] = useState(true);
-  const [bolsaFamiliaAnteriormente, setBolsaFamiliaAnteriormente] = useState(true);
+  const [bolsaFamiliaAnteriormente, setBolsaFamiliaAnteriormente] =
+    useState(true);
   const [outroBeneficio, setOutroBeneficio] = useState(true);
   const [pessoasComDeficiencia, setPessoasComDeficiencia] = useState(true);
-
-  const handleSubmit = () => {
-    console.log(
-      JSON.stringify({
-        chefeDaFamilia,
-        menores,
-        aposentadosPensionistas,
-        moradia,
-        redeEletrica,
-        redeEsgoto,
-        ruaAsfaltada,
-        aguaEncanada,
-        redeServicos,
-        computador,
-        internet,
-        criancaAdolescentePossuiCelular,
-        criancaAdolescentePossuiInternet,
-        adolenscenteComExpDeTrabalho,
-        bolsaFamiliaAtualmente,
-        bolsaFamiliaAnteriormente,
-        outroBeneficio,
-        pessoasComDeficiencia,
-      })
-    );
-  };
 
   return (
     <div className={classes.container}>
@@ -114,10 +95,7 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Rede Elétrica ?
         </FormLabel>
-        <RadioGroup
-          value={redeEletrica}
-          row
-        >
+        <RadioGroup value={redeEletrica} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRedeEletrica(true)} />}
@@ -132,10 +110,7 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Rede de Esgoto ?
         </FormLabel>
-        <RadioGroup
-          value={redeEsgoto}
-          row
-        >
+        <RadioGroup value={redeEsgoto} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRedeEsgoto(true)} />}
@@ -150,10 +125,7 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Rua Asfaltada ?
         </FormLabel>
-        <RadioGroup
-          value={ruaAsfaltada}
-          row
-        >
+        <RadioGroup value={ruaAsfaltada} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRuaAsfaltada(true)} />}
@@ -168,10 +140,7 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Água Encanada ?
         </FormLabel>
-        <RadioGroup
-          value={aguaEncanada}
-          row
-        >
+        <RadioGroup value={aguaEncanada} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setAguaEncanada(true)} />}
@@ -186,10 +155,7 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Rede de Serviços ?
         </FormLabel>
-        <RadioGroup
-          value={redeServicos}
-          row
-        >
+        <RadioGroup value={redeServicos} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRedeServicos(true)} />}
@@ -200,14 +166,11 @@ export const PesquisaSocial = () => {
             control={<Radio onClick={() => setRedeServicos(false)} />}
             label="Não"
           />
-          </RadioGroup>
+        </RadioGroup>
         <FormLabel className={classes.label} component="legend">
           Possui Computador ?
         </FormLabel>
-        <RadioGroup
-          value={computador}
-          row
-        >
+        <RadioGroup value={computador} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setComputador(true)} />}
@@ -219,85 +182,90 @@ export const PesquisaSocial = () => {
             label="Não"
           />
         </RadioGroup>
-          <FormLabel className={classes.label} component="legend">
-            Possui Internet Banda Larga ?
-          </FormLabel>
-          <RadioGroup
-            value={internet}
-            row
-          >
-            <FormControlLabel
-              value={true}
-              control={<Radio onClick={() => setInternet(true)} />}
-              label="Sim"
-            />
-            <FormControlLabel
-              value={false}
-              control={<Radio onClick={() => setInternet(false)} />}
-              label="Não"
-            />
-        </RadioGroup>
         <FormLabel className={classes.label} component="legend">
-            Criança/Adolescente com Celular ?
-          </FormLabel>
-          <RadioGroup
-            value={criancaAdolescentePossuiCelular}
-            row
-          >
-            <FormControlLabel
-              value={true}
-              control={<Radio onClick={() => setCriancaAdolescentePossuiCelulardo(true)} />}
-              label="Sim"
-            />
-            <FormControlLabel
-              value={false}
-              control={<Radio onClick={() => setCriancaAdolescentePossuiCelulardo(false)} />}
-              label="Não"
-            />
-        </RadioGroup>
-        <FormLabel className={classes.label} component="legend">
-            Criança/Adolescente com Internet Móvel ?
-          </FormLabel>
-        <RadioGroup
-            value={criancaAdolescentePossuiInternet}
-            row
-          >
-            <FormControlLabel
-              value={true}
-              control={<Radio onClick={() => setCriancaAdolescentePossuiInternet(true)} />}
-              label="Sim"
-            />
-            <FormControlLabel
-              value={false}
-              control={<Radio onClick={() => setCriancaAdolescentePossuiInternet(false)} />}
-              label="Não"
-            />
-        </RadioGroup>
-        <FormLabel className={classes.label} component="legend">
-          Experiência de Trabalho Adolescente ?
+          Possui Internet Banda Larga ?
         </FormLabel>
-        <RadioGroup
-          value={adolenscenteComExpDeTrabalho}
-          row
-        >
+        <RadioGroup value={internet} row>
           <FormControlLabel
             value={true}
-            control={<Radio onClick={() => setAdolenscenteComExpDeTrabalho(true)} />}
+            control={<Radio onClick={() => setInternet(true)} />}
             label="Sim"
           />
           <FormControlLabel
             value={false}
-            control={<Radio onClick={() => setAdolenscenteComExpDeTrabalho(false)} />}
+            control={<Radio onClick={() => setInternet(false)} />}
+            label="Não"
+          />
+        </RadioGroup>
+        <FormLabel className={classes.label} component="legend">
+          Criança/Adolescente com Celular ?
+        </FormLabel>
+        <RadioGroup value={criancaAdolescentePossuiCelular} row>
+          <FormControlLabel
+            value={true}
+            control={
+              <Radio
+                onClick={() => setCriancaAdolescentePossuiCelulardo(true)}
+              />
+            }
+            label="Sim"
+          />
+          <FormControlLabel
+            value={false}
+            control={
+              <Radio
+                onClick={() => setCriancaAdolescentePossuiCelulardo(false)}
+              />
+            }
+            label="Não"
+          />
+        </RadioGroup>
+        <FormLabel className={classes.label} component="legend">
+          Criança/Adolescente com Internet Móvel ?
+        </FormLabel>
+        <RadioGroup value={criancaAdolescentePossuiInternet} row>
+          <FormControlLabel
+            value={true}
+            control={
+              <Radio
+                onClick={() => setCriancaAdolescentePossuiInternet(true)}
+              />
+            }
+            label="Sim"
+          />
+          <FormControlLabel
+            value={false}
+            control={
+              <Radio
+                onClick={() => setCriancaAdolescentePossuiInternet(false)}
+              />
+            }
+            label="Não"
+          />
+        </RadioGroup>
+        <FormLabel className={classes.label} component="legend">
+          Experiência de Trabalho Adolescente ?
+        </FormLabel>
+        <RadioGroup value={adolenscenteComExpDeTrabalho} row>
+          <FormControlLabel
+            value={true}
+            control={
+              <Radio onClick={() => setAdolenscenteComExpDeTrabalho(true)} />
+            }
+            label="Sim"
+          />
+          <FormControlLabel
+            value={false}
+            control={
+              <Radio onClick={() => setAdolenscenteComExpDeTrabalho(false)} />
+            }
             label="Não"
           />
         </RadioGroup>
         <FormLabel className={classes.label} component="legend">
           Possui Bolsa Família Atualmente ?
         </FormLabel>
-        <RadioGroup
-          value={bolsaFamiliaAtualmente}
-          row
-        >
+        <RadioGroup value={bolsaFamiliaAtualmente} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setBolsaFamiliaAtualmente(true)} />}
@@ -312,28 +280,26 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Já possuiu Bolsa Família ?
         </FormLabel>
-        <RadioGroup
-          value={bolsaFamiliaAnteriormente}
-          row
-        >
+        <RadioGroup value={bolsaFamiliaAnteriormente} row>
           <FormControlLabel
             value={true}
-            control={<Radio onClick={() => setBolsaFamiliaAnteriormente(true)} />}
+            control={
+              <Radio onClick={() => setBolsaFamiliaAnteriormente(true)} />
+            }
             label="Sim"
           />
           <FormControlLabel
             value={false}
-            control={<Radio onClick={() => setBolsaFamiliaAnteriormente(false)} />}
+            control={
+              <Radio onClick={() => setBolsaFamiliaAnteriormente(false)} />
+            }
             label="Não"
           />
         </RadioGroup>
         <FormLabel className={classes.label} component="legend">
           Possui Outro Benefício ?
         </FormLabel>
-        <RadioGroup
-          value={outroBeneficio}
-          row
-        >
+        <RadioGroup value={outroBeneficio} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setOutroBeneficio(true)} />}
@@ -348,10 +314,7 @@ export const PesquisaSocial = () => {
         <FormLabel className={classes.label} component="legend">
           Pessoas com deficiência ?
         </FormLabel>
-        <RadioGroup
-          value={pessoasComDeficiencia}
-          row
-        >
+        <RadioGroup value={pessoasComDeficiencia} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setPessoasComDeficiencia(true)} />}
@@ -363,15 +326,6 @@ export const PesquisaSocial = () => {
             label="Não"
           />
         </RadioGroup>
-        
-        <Button
-          onClick={handleSubmit}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-        >
-          Salvar
-        </Button>
       </div>
     </div>
   );

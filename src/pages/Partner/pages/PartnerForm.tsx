@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -9,6 +9,8 @@ import { Saude } from "../tabs/health";
 import { PesquisaSocial } from "../tabs/socialResearch";
 import Main from "../../../components/Main";
 import TabPanel from "../components/tabPanel";
+import { ArrowForward, Check } from "@material-ui/icons";
+import { Fab } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -18,11 +20,14 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const PartnerForm = (): JSX.Element => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+    setCurrentTab(newValue);
   };
+  const [currentTab, setCurrentTab] = useState(0);
+  const [data, setData] = useState({});
+  const next = () => setCurrentTab(currentTab === 3 ? 0 : currentTab + 1);
+
+  const save = () => alert("carai beibe charque");
 
   function a11yProps(index: any) {
     return {
@@ -31,70 +36,61 @@ const PartnerForm = (): JSX.Element => {
     };
   }
 
+  useEffect(() => {
+    console.log("CARALHO, SÔ FODA!!!    \n", JSON.stringify(data));
+  }, [data]);
+
   return (
     <div>
       <Main />
       <Tabs
         orientation="horizontal"
         variant="standard"
-        value={value}
-        onChange={handleChange}
+        value={currentTab}
         aria-label="horizontal tabs"
         className={classes.tabs}
+        onChange={handleChange}
       >
         <Tab label="Dados Pessoais" {...a11yProps(0)} />
         <Tab label="Responsável legal e Família" {...a11yProps(3)} />
         <Tab label="Saúde" {...a11yProps(2)} />
         <Tab label="Pesquisa Social" {...a11yProps(1)} />
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <div
+      <div
+        style={{
+          marginTop: "20%",
+        }}
+      >
+        <Fab
           style={{
-            textAlign: "justify",
-            padding: "10%",
-            width: "60%",
-            marginLeft: "15%",
+            position: "absolute",
+            top: 140,
+            right: 48,
+          }}
+          color="primary"
+          onClick={() => {
+            currentTab !== 3 ? next() : save();
           }}
         >
-          <DadosPessoais />
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div
-          style={{
-            textAlign: "justify",
-            padding: "10%",
-            width: "60%",
-            marginLeft: "15%",
-          }}
-        >
+          {currentTab !== 3 ? (
+            <ArrowForward style={{ color: "#fff" }} />
+          ) : (
+            <Check style={{ color: "#fff" }} />
+          )}
+        </Fab>
+        <TabPanel value={currentTab} index={0}>
+          <DadosPessoais setPersonalData={setData} />
+        </TabPanel>
+        <TabPanel value={currentTab} index={1}>
           <FamilyData />
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <div
-          style={{
-            textAlign: "justify",
-            padding: "10%",
-            width: "60%",
-            marginLeft: "15%",
-          }}
-        >
+        </TabPanel>
+        <TabPanel value={currentTab} index={2}>
           <Saude />
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <div
-          style={{
-            textAlign: "justify",
-            padding: "10%",
-            width: "60%",
-            marginLeft: "15%",
-          }}
-        >
+        </TabPanel>
+        <TabPanel value={currentTab} index={3}>
           <PesquisaSocial />
-        </div>
-      </TabPanel>
+        </TabPanel>
+      </div>
     </div>
   );
 };

@@ -26,7 +26,8 @@ export const Saude = () => {
   const [restricaoAlimentar, setRestricaoAlimentar] = useState(false);
   const [qualRestricaoAlimentar, setQualRestricaoAlimentar] = useState("");
   const [restricaoMedicamentos, setRestricaoMedicamentos] = useState(false);
-  const [qualRestricaoMedicamentos, setQualRestricaoMedicamentos] = useState("");
+  const [qualRestricaoMedicamentos, setQualRestricaoMedicamentos] =
+    useState("");
   const [acompanhamentoMedico, setAcompanhamentoMedico] = useState(false);
   const [nomeDoMedico, setNomeDoMedico] = useState("");
   const [enfermidade, setEnfermidade] = useState("");
@@ -138,10 +139,7 @@ export const Saude = () => {
         <FormLabel className={classes.label} component="legend">
           Restrição Alimentar ?
         </FormLabel>
-        <RadioGroup
-          value={restricaoAlimentar}
-          row
-        >
+        <RadioGroup value={restricaoAlimentar} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRestricaoAlimentar(true)} />}
@@ -165,10 +163,7 @@ export const Saude = () => {
         <FormLabel className={classes.label} component="legend">
           Restrição a Medicação ?
         </FormLabel>
-        <RadioGroup
-          value={restricaoMedicamentos}
-          row
-        >
+        <RadioGroup value={restricaoMedicamentos} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setRestricaoMedicamentos(true)} />}
@@ -180,7 +175,7 @@ export const Saude = () => {
             label="Não"
           />
         </RadioGroup>
-        {restricaoMedicamentos  && (
+        {restricaoMedicamentos && (
           <TextField
             className={classes.input}
             label="Qual ?"
@@ -192,10 +187,7 @@ export const Saude = () => {
         <FormLabel className={classes.label} component="legend">
           Acompanhamento Medico ?
         </FormLabel>
-        <RadioGroup
-          value={acompanhamentoMedico}
-          row
-        >
+        <RadioGroup value={acompanhamentoMedico} row>
           <FormControlLabel
             value={true}
             control={<Radio onClick={() => setAcompanhamentoMedico(true)} />}
@@ -259,14 +251,6 @@ export const Saude = () => {
             </Select>
           </>
         )}
-        <Button
-          onClick={handleSubmit}
-          className={classes.button}
-          variant="contained"
-          color="primary"
-        >
-          Salvar
-        </Button>
       </div>
     </div>
   );
