@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Copyright from "../components/Copyright";
-
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,14 +12,11 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import logo from '../images/Logo.jpeg';
-
-
-
+import logo from "../images/Logo.jpeg";
 
 export default function Login() {
-  const classes = useStyles(); 
-  const history = useHistory(); 
+  const classes = useStyles();
+  const history = useHistory();
   const [user, setUser] = useState("");
   const [senha, setSenha] = useState("");
   const [lembrarUsuario, setLembrarUsuario] = useState(false);
@@ -36,26 +32,26 @@ export default function Login() {
     }
   }, [user, senha]);
 
-  useEffect(() => {    
-      document.title = 'Projeto Acolher';     
-    if (localStorage.getItem("usuario")) {
+  useEffect(() => {
+    document.title = "Projeto Acolher";
+    if (localStorage.getItem("user")) {
       setLembrarUsuario(true);
-      setUser(localStorage.getItem("usuario"));
+      setUser(localStorage.getItem("user"));
     }
   }, []);
 
   useEffect(() => {
     if (lembrarUsuario) {
-      localStorage.setItem("usuario", user);
+      localStorage.setItem("user", user);
     } else {
-      localStorage.removeItem("usuario");
+      localStorage.removeItem("user");
     }
   }, [lembrarUsuario, user]);
 
-  const alteraLembrar = e => {
+  const alteraLembrar = (e) => {
     setLembrarUsuario(!lembrarUsuario);
   };
-  const validaLogin = e => {
+  const validaLogin = (e) => {
     e.preventDefault();
     if (user === "Admin" && senha === "123senha") {
       setError(false);
@@ -72,7 +68,7 @@ export default function Login() {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-        <img src={logo} width="100%" height="100%" alt="" /> 
+          <img src={logo} width="100%" height="100%" alt="" />
         </Avatar>
         <Typography component="h1" variant="h5">
           Projeto Acolher
@@ -89,7 +85,7 @@ export default function Login() {
             autoComplete="user"
             autoFocus
             value={user}
-            onChange={e => setUser(e.target.value)}
+            onChange={(e) => setUser(e.target.value)}
             error={error}
           />
           <TextField
@@ -103,7 +99,7 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
             value={senha}
-            onChange={e => setSenha(e.target.value)}
+            onChange={(e) => setSenha(e.target.value)}
             error={error}
             helperText={helperText}
           />
@@ -127,7 +123,7 @@ export default function Login() {
           >
             <LockOutlinedIcon /> Acessar
           </Button>
-         </form>
+        </form>
       </div>
       <Box mt={8}>
         <Copyright />
@@ -136,24 +132,23 @@ export default function Login() {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
     width: "17.9%",
-    height:"50%"
+    height: "50%",
   },
   form: {
-    width: "100%",
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));

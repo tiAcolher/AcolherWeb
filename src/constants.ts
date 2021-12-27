@@ -102,6 +102,11 @@ export const domicilio = [
   { value: "Próprio", label: "Proprio" },
   { value: "Alugado", label: "alugado" },
   { value: "Cedido/Emprestado", label: "cedido/emprestado" },
-  { value: "Invasao", label: "invasao" },
+  { value: "Invasão", label: "invasao" },
   { value: "Outros", label: "outros" },
 ];
+
+export const URL_BASE = "http://localhost:3001";
+export const storageKeys = {
+  USER: "user",
+};
