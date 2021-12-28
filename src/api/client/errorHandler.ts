@@ -4,7 +4,8 @@ const errorHandler = (error, handleError) => {
   }
 
   if (error.response && error.response.status === 401) {
-    alert("Não autorizado");
+    //TODO: jogar isso aqui no redux pra exibir na tela talvez??
+    alert(String(error.response.data.mensagem));
   }
 
   return Promise.reject(error);

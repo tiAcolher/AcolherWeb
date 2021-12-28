@@ -1,13 +1,9 @@
 import { URL_BASE } from "../constants";
+import { Credentials } from "../model/Credentials";
 import client from "./client";
 
 export const authAPI = {
-  login: async (username: string, password: string) => {
-    client({
-      method: "post",
-      baseURL: URL_BASE,
-      url: "/login",
-      data: JSON.stringify({ username, password }),
-    });
+  login: async (data: Credentials) => {
+    return client({ method: "post", baseURL: URL_BASE, url: "/login", data });
   },
 };

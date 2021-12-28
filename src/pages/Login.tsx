@@ -13,56 +13,42 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import logo from "../images/Logo.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUsuario } from "../reducers/userReducer";
 
 export default function Login() {
   const classes = useStyles();
   const history = useHistory();
-  const [user, setUser] = useState("");
+  const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
   const [lembrarUsuario, setLembrarUsuario] = useState(false);
-  const [botaoDesabilitado, setBotaoDesabilitado] = useState(true);
-  const [helperText, setHelperText] = useState("");
-  const [error, setError] = useState(false);
+  const [erro, setErro] = useState(false);
 
-  useEffect(() => {
-    if (user.trim() && senha.trim()) {
-      setBotaoDesabilitado(false);
-    } else {
-      setBotaoDesabilitado(true);
-    }
-  }, [user, senha]);
+  const dispath = useDispatch();
+  const selector = useSelector(selectUsuario);
 
   useEffect(() => {
     document.title = "Projeto Acolher";
-    if (localStorage.getItem("user")) {
-      setLembrarUsuario(true);
-      setUser(localStorage.getItem("user"));
-    }
   }, []);
 
   useEffect(() => {
-    if (lembrarUsuario) {
-      localStorage.setItem("user", user);
-    } else {
-      localStorage.removeItem("user");
+    if (!lembrarUsuario) {
+      localStorage.removeItem("ac-credentials");
     }
-  }, [lembrarUsuario, user]);
+  }, [lembrarUsuario]);
 
-  const alteraLembrar = (e) => {
-    setLembrarUsuario(!lembrarUsuario);
-  };
   const validaLogin = (e) => {
     e.preventDefault();
-    if (user === "Admin" && senha === "123senha") {
-      setError(false);
-      setHelperText("Login OK! Aguarde...");
+
+    dispath(login({ usuario, senha, lembrarUsuario }));
+    console.log("ali: ", selector);
+    if (selector) {
+      setErro(false);
       history.push("/home");
     } else {
-      setError(true);
-      setHelperText("O usuário ou a senha informados são inválidos!");
+      setErro(true);
     }
   };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -84,9 +70,9 @@ export default function Login() {
             name="user"
             autoComplete="user"
             autoFocus
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-            error={error}
+            error={erro}
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -99,15 +85,14 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
             value={senha}
+            error={erro}
             onChange={(e) => setSenha(e.target.value)}
-            error={error}
-            helperText={helperText}
           />
           <FormControlLabel
             control={
               <Switch
                 checked={lembrarUsuario}
-                onChange={alteraLembrar}
+                onChange={() => setLembrarUsuario(!lembrarUsuario)}
                 name="lembrar"
               />
             }
@@ -118,7 +103,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             color="primary"
-            disabled={botaoDesabilitado}
+            disabled={!(usuario && senha)}
             className={classes.submit}
           >
             <LockOutlinedIcon /> Acessar
