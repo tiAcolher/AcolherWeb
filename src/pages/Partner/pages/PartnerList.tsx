@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -14,61 +14,56 @@ import SearchIcon from "@material-ui/icons/Search";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import EditIcon from "@material-ui/icons/Edit";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Main from "../../../components/Main";
+import {
+  participantActions,
+  select,
+  selectParticipantList,
+} from "../../../reducers/participantReducer";
+import { Participant } from "../../../model/Participant";
 
 const PartnerList = (): JSX.Element => {
   const classes = useStyles();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const mockPartnerList = [
-    {
-      name: "Marcela",
-      phone: "88 8888-8888",
-      parent: "Felipe",
-      parentPhone: "99 9999-9999",
-    },
-    {
-      name: "Silas",
-      phone: "66 6666-6666",
-      parent: "ciclano",
-      parentPhone: "77 7777-7777",
-    },
-    {
-      name: "Felipe",
-      phone: "55 5555-5555",
-      parent: "beltrano",
-      parentPhone: "44 4444-4444",
-    },
-    {
-      name: "Maria",
-      phone: "11 2222-2222",
-      parent: "fulano",
-      parentPhone: "33 3333-3333",
-    },
-    {
-      name: "Juliana",
-      phone: "11 9999-9999",
-      parent: "Paula",
-      parentPhone: "22 2222-2222",
-    },
-  ];
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const history = useHistory();
 
-  const [search, setSearch] = React.useState<string>("");
-  const [list, setList] = React.useState(mockPartnerList);
+  const dispatch = useDispatch();
+  const listaParticipantes = useSelector(selectParticipantList);
+
+  const [search, setSearch] = useState<string>("");
+  const [lista, setLista] = useState(listaParticipantes);
+
+  useEffect(() => {
+    dispatch(participantActions.findAll());
+  }, []);
+
+  useEffect(() => {
+    if (listaParticipantes) {
+      setLista(listaParticipantes);
+    }
+  }, [listaParticipantes]);
 
   useEffect(() => {
     if (search.length) {
-      let newList = mockPartnerList.filter((item) =>
+      let newList = lista.filter((item) =>
         item.name.toUpperCase().includes(search.toUpperCase())
       );
-      setList(newList);
+      setLista(newList);
     } else {
-      setList(mockPartnerList);
+      setLista(lista);
     }
-  }, [mockPartnerList, search]);
+  }, [lista, search]);
+
+  const handleEditPress = (participant: Participant) => {
+    dispatch(select(participant));
+    history.push("createPartner");
+  };
+
+  const handleAddParticipant = () => {
+    dispatch(select(null));
+    history.push("createPartner");
+  };
 
   return (
     <div>
@@ -93,29 +88,45 @@ const PartnerList = (): JSX.Element => {
         </div>
 
         <PersonAddIcon
-          onClick={() => history.push("createPartner")}
+          onClick={handleAddParticipant}
           className={classes.addButton}
         />
 
         <List style={{ marginTop: 32 }}>
-          {list.map((partner) => (
+          {lista.length === 0 ? (
             <Card className={classes.card}>
               <Box display="flex">
-                <Avatar className={classes.avatar} />
-                <Box className={classes.cardContent}>
-                  <Typography>Nome: {partner?.name}</Typography>
-                  <Typography>Telefone: {partner?.phone}</Typography>
-                  <Typography>Responsável: {partner?.parent}</Typography>
+                <Box className={classes.emptyList}>
                   <Typography>
-                    Telefone do Responsável: {partner?.parentPhone}
+                    Não há nenhum parceiro cadastrado na base de dados
                   </Typography>
                 </Box>
-                <div className={classes.buttons}>
-                  <EditIcon className={classes.EditIcon} />
-                </div>
               </Box>
             </Card>
-          ))}
+          ) : (
+            lista.map((participante: Participant) => (
+              <Card key={participante.id} className={classes.card}>
+                <Box display="flex">
+                  <Avatar className={classes.avatar} />
+                  <Box className={classes.cardContent}>
+                    <Typography>Nome: {participante.nomeCompleto}</Typography>
+                    <Typography>RG: {participante?.rg}</Typography>
+                    <Typography>Telefone: {participante?.telefone}</Typography>
+                    <Typography>
+                      Telefone do Responsável:
+                      {participante?.telefoneResponsavel}
+                    </Typography>
+                  </Box>
+                  <div className={classes.buttons}>
+                    <EditIcon
+                      className={classes.EditIcon}
+                      onClick={() => handleEditPress(participante)}
+                    />
+                  </div>
+                </Box>
+              </Card>
+            ))
+          )}
         </List>
       </div>
     </div>
@@ -148,13 +159,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "-2.3%",
       cursor: "pointer",
     },
-
     EditIcon: {
       width: 50,
       height: 35,
       cursor: "pointer",
     },
-
     container: {
       padding: 20,
       backgroundColor: "#60606022",
@@ -188,6 +197,10 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up("md")]: {
         width: "20ch",
       },
+    },
+    emptyList: {
+      flex: 1,
+      textAlign: "center",
     },
   })
 );

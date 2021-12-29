@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   createStyles,
   makeStyles,
@@ -21,33 +22,60 @@ import {
   series,
   turnos,
 } from "../../../constants";
+import {
+  select,
+  selectParticipant,
+} from "../../../reducers/participantReducer";
+import { Participant } from "../../../model/Participant";
 
-export const DadosPessoais = ({ setPersonalData }) => {
+export const DadosPessoais = () => {
   const classes = useStyles();
+  const participante: Partial<Participant> = useSelector(selectParticipant);
 
   const [isFederated, setFederated] = useState(false);
-  const [uf, setUf] = useState("AC");
-  const [cidade, setCidade] = useState("Acrelândia");
-  const [escolaridade, setEscolaridade] = useState();
-  const [turno, setTurno] = useState("");
-  const [serie, setSerie] = useState("");
-  const [nome, setNome] = useState("");
-  const [genero, setGenero] = useState("f");
-  const [dtNascimento, setDtNascimento] = useState("");
-  const [email, setEmail] = useState("");
-  const [rg, setRg] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [logradouro, setLogradouro] = useState("");
-  const [numero, setNumero] = useState("");
-  const [complemento, setComplemento] = useState("");
-  const [cep, setCep] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [telFixo, setTelFixo] = useState("");
-  const [celular, setCelular] = useState("");
-  const [escola, setEscola] = useState("");
-  const [clube, setClube] = useState("");
-  const [modalidade, setModalidade] = useState("");
-  const [dtInicio, setDtInicio] = useState("");
+  const [uf, setUf] = useState(participante?.estado || "AC");
+  const [cidade, setCidade] = useState(participante?.cidade || "Acrelândia");
+  const [escolaridade, setEscolaridade] = useState(
+    participante?.escolaridade || ""
+  );
+  const [turno, setTurno] = useState(participante?.turno || "");
+  const [serie, setSerie] = useState(participante?.serie || "");
+  const [nomeCompleto, setNomeCompleto] = useState(
+    participante?.nomeCompleto || ""
+  );
+  const [genero, setGenero] = useState(participante?.genero || "");
+  const [dtNascimento, setDtNascimento] = useState("" || "");
+  const [email, setEmail] = useState(participante?.email || "");
+  const [rg, setRg] = useState(participante?.rg || "");
+  const [cpf, setCpf] = useState(participante?.cpf || "");
+  const [logradouro, setLogradouro] = useState(participante?.logradouro || "");
+  const [numero, setNumero] = useState(participante?.numeroEndereco || "");
+  const [complemento, setComplemento] = useState(
+    participante?.complemento || ""
+  );
+  const [cep, setCep] = useState(participante?.cep || "");
+  const [bairro, setBairro] = useState("" || "");
+  const [telFixo, setTelFixo] = useState(participante?.telefone || "");
+  const [celular, setCelular] = useState(participante?.celular || "");
+  const [escola, setEscola] = useState(participante?.escola || "");
+  const [clube, setClube] = useState(participante?.clube || "");
+  const [modalidade, setModalidade] = useState(participante?.modalidade || "");
+  const [dataInicio, setDataInicio] = useState(
+    participante?.dataInicioFederado || ""
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      select({
+        ...participante,
+        nomeCompleto,
+        serie,
+        rg,
+      })
+    );
+  }, [nomeCompleto, serie, rg]);
 
   return (
     <div className={classes.container}>
@@ -56,8 +84,9 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <TextField
           className={classes.input}
           label="Nome Completo"
+          value={nomeCompleto}
           onChange={(event: any) => {
-            setNome(event.target.value);
+            setNomeCompleto(event.target.value);
           }}
         />
         <FormLabel className={classes.label} component="legend">
@@ -93,6 +122,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <TextField
           className={classes.input}
           label="RG"
+          value={rg}
           onChange={(event: any) => {
             setRg(event.target.value);
           }}
@@ -102,6 +132,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
           onChange={(event: any) => {
             setCpf(event.target.value);
           }}
+          value={cpf}
         >
           {() => (
             <TextField className={classes.input} label="CPF" type="text" />
@@ -119,15 +150,19 @@ export const DadosPessoais = ({ setPersonalData }) => {
         {isFederated && (
           <FederatedForm
             titulo="Dados Federado"
+            clube={clube}
+            modalidade={modalidade}
+            dataInicio={dataInicio}
             setClube={setClube}
             setModalidade={setModalidade}
-            setDtInicio={setDtInicio}
+            setDataInicio={setDataInicio}
           />
         )}
         <p>Endereço</p>
         <TextField
           className={classes.input}
           label="Logradouro"
+          value={logradouro}
           onChange={(event: any) => {
             setLogradouro(event.target.value);
           }}
@@ -135,6 +170,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <TextField
           className={classes.input}
           label="Número"
+          value={numero}
           type="number"
           onChange={(event: any) => {
             setNumero(event.target.value);
@@ -143,12 +179,14 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <TextField
           className={classes.input}
           label="Complemento"
+          value={complemento}
           onChange={(event: any) => {
             setComplemento(event.target.value);
           }}
         />
         <ReactInputMask
           mask="99999-999"
+          value={cep}
           onChange={(event: any) => {
             setCep(event.target.value);
           }}
@@ -158,6 +196,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <TextField
           label="Bairro"
           className={classes.input}
+          value={bairro}
           onChange={(event: any) => {
             setBairro(event.target.value);
           }}
@@ -195,6 +234,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <p>Contatos</p>
         <ReactInputMask
           mask="(99) 9999-9999"
+          value={telFixo}
           onChange={(event: any) => {
             setTelFixo(event.target.value);
           }}
@@ -203,6 +243,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
         </ReactInputMask>
         <ReactInputMask
           mask="(99) 9 9999-9999"
+          value={celular}
           onChange={(event: any) => {
             setCelular(event.target.value);
           }}
@@ -213,6 +254,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
           onChange={(event: any) => {
             setEmail(event.target.value);
           }}
+          value={email}
           className={classes.input}
           label="Email"
         />
@@ -220,6 +262,7 @@ export const DadosPessoais = ({ setPersonalData }) => {
         <TextField
           className={classes.input}
           label="Nome da Escola"
+          value={escola}
           onChange={(event: any) => {
             setEscola(event.target.value);
           }}

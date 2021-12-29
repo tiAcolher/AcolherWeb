@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-
+import { useDispatch, useSelector } from "react-redux";
 import { DadosPessoais } from "../tabs/personalData";
 import { FamilyData } from "../tabs/familyData";
 import { Saude } from "../tabs/health";
@@ -11,6 +11,10 @@ import Main from "../../../components/Main";
 import TabPanel from "../components/tabPanel";
 import { ArrowForward, Check } from "@material-ui/icons";
 import { Fab } from "@material-ui/core";
+import {
+  participantActions,
+  selectParticipant,
+} from "../../../reducers/participantReducer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -24,8 +28,19 @@ const PartnerForm = (): JSX.Element => {
     setCurrentTab(newValue);
   };
   const [currentTab, setCurrentTab] = useState(0);
-  const [data, setData] = useState({});
-  const next = () => setCurrentTab(currentTab === 3 ? 0 : currentTab + 1);
+  const dispatch = useDispatch();
+  const participante = useSelector(selectParticipant);
+  const next = () => {
+    if (currentTab === 0) {
+      if (participante.id) {
+        dispatch(participantActions.update(participante));
+      } else {
+        dispatch(participantActions.create(participante));
+      }
+    }
+
+    setCurrentTab(currentTab === 3 ? 0 : currentTab + 1);
+  };
 
   const save = () => alert("carai beibe charque");
 
@@ -35,10 +50,6 @@ const PartnerForm = (): JSX.Element => {
       "aria-controls": `vertical-tabpanel-${index}`,
     };
   }
-
-  useEffect(() => {
-    console.log("CARALHO, SÔ FODA!!!    \n", JSON.stringify(data));
-  }, [data]);
 
   return (
     <div>
@@ -79,7 +90,7 @@ const PartnerForm = (): JSX.Element => {
           )}
         </Fab>
         <TabPanel value={currentTab} index={0}>
-          <DadosPessoais setPersonalData={setData} />
+          <DadosPessoais />
         </TabPanel>
         <TabPanel value={currentTab} index={1}>
           <FamilyData />

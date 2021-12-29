@@ -1,7 +1,15 @@
 import React from "react";
 import { makeStyles, TextField, Theme, createStyles } from "@material-ui/core";
 
-const FederatedForm = ({ setClube, setModalidade, setDtInicio, titulo }) => {
+const FederatedForm = ({
+  setClube,
+  setModalidade,
+  setDataInicio,
+  titulo,
+  clube,
+  modalidade,
+  dataInicio,
+}) => {
   const classes = useStyles();
 
   return (
@@ -11,14 +19,14 @@ const FederatedForm = ({ setClube, setModalidade, setDtInicio, titulo }) => {
         className={classes.input}
         name="clube"
         label="Nome do Clube"
+        value={clube}
         onChange={(event: any) => {
           setClube(event.target.value);
-          console.log(event.target.value);
         }}
       />
       <TextField
         className={classes.input}
-        name="modalidade"
+        value={modalidade}
         label="Modalidade Esportiva"
         onChange={(event: any) => {
           setModalidade(event.target.value);
@@ -26,11 +34,11 @@ const FederatedForm = ({ setClube, setModalidade, setDtInicio, titulo }) => {
       />
       <TextField
         className={classes.input}
-        name="dataInicio"
+        value={dataInicio}
         label="Data de Início"
         type="date"
         onChange={(event: any) => {
-          setDtInicio(event.target.value);
+          setDataInicio(event.target.value);
         }}
         InputLabelProps={{ shrink: true }}
       />

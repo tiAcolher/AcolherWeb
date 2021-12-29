@@ -41,7 +41,7 @@ export default function Login() {
     e.preventDefault();
 
     dispath(login({ usuario, senha, lembrarUsuario }));
-    console.log("ali: ", selector);
+
     if (selector) {
       setErro(false);
       history.push("/home");

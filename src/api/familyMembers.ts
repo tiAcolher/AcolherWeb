@@ -4,15 +4,18 @@ import client from "./client";
 
 export const familyMembersAPI = {
   create: (data: Partial<FamilyMember>) => {
-    client({ method: "post", baseURL: URL_BASE, url: "/familyMember", data });
+    return client({ method: "post", url: "/familyMember", data });
   },
   read: (id: number) => {
-    client({ method: "get", baseURL: URL_BASE, url: `/familyMember/${id}` });
+    return client({
+      method: "get",
+      url: `/familyMember/${id}`,
+    });
   },
   update: (data: Partial<FamilyMember>) => {
-    client({ method: "put", baseURL: URL_BASE, url: "/familyMember", data });
+    return client({ method: "put", url: "/familyMember", data });
   },
   delete: (id: number) => {
-    client({ method: "delete", baseURL: URL_BASE, url: `/familyMember/${id}` });
+    return client({ method: "delete", url: `/familyMember/${id}` });
   },
 };
