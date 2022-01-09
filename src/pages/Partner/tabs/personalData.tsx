@@ -18,64 +18,43 @@ import { Locations } from "../../../location";
 import FederatedForm from "../components/federatedForm";
 import ReactInputMask from "react-input-mask";
 import {
-  escolaridade as escolaridadeArray,
-  series,
-  turnos,
-} from "../../../constants";
-import {
   select,
   selectParticipant,
 } from "../../../reducers/participantReducer";
+import {
+  select as selectEnd,
+  selectAddress,
+} from "../../../reducers/addressReducer";
 import { Participant } from "../../../model/Participant";
+import { Address } from "../../../model/Address";
 
 export const DadosPessoais = () => {
   const classes = useStyles();
   const participante: Partial<Participant> = useSelector(selectParticipant);
-
+  const endereco: Partial<Address> = useSelector(selectAddress);
+  const [participanteLocal, setParticipanteLocal] = useState(participante);  
+  const [enderecoLocal, setEnderecoLocal] = useState(endereco);
   const [isFederated, setFederated] = useState(false);
-  const [uf, setUf] = useState(participante?.estado || "AC");
-  const [cidade, setCidade] = useState(participante?.cidade || "Acrelândia");
-  const [escolaridade, setEscolaridade] = useState(
-    participante?.escolaridade || ""
-  );
-  const [turno, setTurno] = useState(participante?.turno || "");
-  const [serie, setSerie] = useState(participante?.serie || "");
-  const [nomeCompleto, setNomeCompleto] = useState(
-    participante?.nomeCompleto || ""
-  );
-  const [genero, setGenero] = useState(participante?.genero || "");
-  const [dtNascimento, setDtNascimento] = useState("" || "");
-  const [email, setEmail] = useState(participante?.email || "");
-  const [rg, setRg] = useState(participante?.rg || "");
-  const [cpf, setCpf] = useState(participante?.cpf || "");
-  const [logradouro, setLogradouro] = useState(participante?.logradouro || "");
-  const [numero, setNumero] = useState(participante?.numeroEndereco || "");
-  const [complemento, setComplemento] = useState(
-    participante?.complemento || ""
-  );
-  const [cep, setCep] = useState(participante?.cep || "");
-  const [bairro, setBairro] = useState("" || "");
-  const [telFixo, setTelFixo] = useState(participante?.telefone || "");
-  const [celular, setCelular] = useState(participante?.celular || "");
-  const [escola, setEscola] = useState(participante?.escola || "");
-  const [clube, setClube] = useState(participante?.clube || "");
-  const [modalidade, setModalidade] = useState(participante?.modalidade || "");
-  const [dataInicio, setDataInicio] = useState(
-    participante?.dataInicioFederado || ""
-  );
+  
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
-      select({
-        ...participante,
-        nomeCompleto,
-        serie,
-        rg,
-      })
+      select(participanteLocal)     
     );
-  }, [nomeCompleto, serie, rg]);
+
+  }, [participante]);
+
+  useEffect(() => {
+    dispatch(
+      selectEnd(enderecoLocal)     
+    );
+
+  }, [endereco]);
+  console.log(endereco)
+
+
 
   return (
     <div className={classes.container}>
@@ -84,28 +63,28 @@ export const DadosPessoais = () => {
         <TextField
           className={classes.input}
           label="Nome Completo"
-          value={nomeCompleto}
+          value={participanteLocal?.nomeCompleto}
           onChange={(event: any) => {
-            setNomeCompleto(event.target.value);
+            setParticipanteLocal({...participanteLocal, nomeCompleto: event.target.value});
           }}
         />
         <FormLabel className={classes.label} component="legend">
           Gênero
         </FormLabel>
-        <RadioGroup value={genero} row>
+        <RadioGroup value={participanteLocal?.genero} row>
           <FormControlLabel
             value="f"
-            control={<Radio onClick={() => setGenero("f")} />}
+            control={<Radio onClick={() => setParticipanteLocal({...participanteLocal, genero:"f"})} />}
             label="Feminino"
           />
           <FormControlLabel
             value="m"
-            control={<Radio onClick={() => setGenero("m")} />}
+            control={<Radio onClick={() => setParticipanteLocal({...participanteLocal, genero:"m"})} />}
             label="Masculino"
           />
           <FormControlLabel
             value="o"
-            control={<Radio onClick={() => setGenero("o")} />}
+            control={<Radio onClick={() => setParticipanteLocal({...participanteLocal, genero:"o"})} />}
             label="Outro"
           />
         </RadioGroup>
@@ -114,25 +93,25 @@ export const DadosPessoais = () => {
           label="Data de Nascimento"
           className={classes.input}
           InputLabelProps={{ shrink: true }}
-          value={dtNascimento}
+          value={participanteLocal?.dtNascimento}
           onChange={(event: any) => {
-            setDtNascimento(event.target.value);
+            setParticipanteLocal({...participanteLocal, dtNascimento: event.target.value});
           }}
         />
         <TextField
           className={classes.input}
           label="RG"
-          value={rg}
+          value={participanteLocal?.rg}
           onChange={(event: any) => {
-            setRg(event.target.value);
+            setParticipanteLocal({...participanteLocal, rg: event.target.value});
           }}
         />
         <ReactInputMask
           mask="999.999.999-99"
           onChange={(event: any) => {
-            setCpf(event.target.value);
+            setParticipanteLocal({...participanteLocal, cpf: event.target.value});
           }}
-          value={cpf}
+          value={participanteLocal?.cpf}
         >
           {() => (
             <TextField className={classes.input} label="CPF" type="text" />
@@ -150,45 +129,41 @@ export const DadosPessoais = () => {
         {isFederated && (
           <FederatedForm
             titulo="Dados Federado"
-            clube={clube}
-            modalidade={modalidade}
-            dataInicio={dataInicio}
-            setClube={setClube}
-            setModalidade={setModalidade}
-            setDataInicio={setDataInicio}
+            partipanteLocal={participanteLocal}
+            setParticipanteLocal={setParticipanteLocal}
           />
         )}
         <p>Endereço</p>
         <TextField
           className={classes.input}
           label="Logradouro"
-          value={logradouro}
+          value={enderecoLocal?.Logradouro}
           onChange={(event: any) => {
-            setLogradouro(event.target.value);
+            setEnderecoLocal({...enderecoLocal, Logradouro: event.target.value});
           }}
         />
         <TextField
           className={classes.input}
           label="Número"
-          value={numero}
+          value={enderecoLocal?.Numero}
           type="number"
           onChange={(event: any) => {
-            setNumero(event.target.value);
+            setEnderecoLocal({...enderecoLocal, Numero: event.target.value});
           }}
         />
         <TextField
           className={classes.input}
           label="Complemento"
-          value={complemento}
+          value={enderecoLocal?.Complemento}
           onChange={(event: any) => {
-            setComplemento(event.target.value);
+            setEnderecoLocal({...enderecoLocal, Complemento: event.target.value});
           }}
         />
         <ReactInputMask
           mask="99999-999"
-          value={cep}
+          value={enderecoLocal?.CEP}
           onChange={(event: any) => {
-            setCep(event.target.value);
+            setEnderecoLocal({...enderecoLocal, CEP: event.target.value});
           }}
         >
           {() => <TextField className={classes.input} label="CEP" />}
@@ -196,16 +171,16 @@ export const DadosPessoais = () => {
         <TextField
           label="Bairro"
           className={classes.input}
-          value={bairro}
+          value={enderecoLocal?.Bairro}
           onChange={(event: any) => {
-            setBairro(event.target.value);
+            setEnderecoLocal({...enderecoLocal, Bairro: event.target.value});
           }}
         />
         <FormLabel className={classes.label}>Estado</FormLabel>
         <Select
-          value={uf}
+          value={enderecoLocal?.Estado}
           onChange={(event: any) => {
-            setUf(event.target.value);
+            setEnderecoLocal({...enderecoLocal, Estado: event.target.value});
           }}
           className={classes.input}
         >
@@ -218,20 +193,20 @@ export const DadosPessoais = () => {
         <FormLabel className={classes.label}>Cidade</FormLabel>
         <Select
           className={classes.input}
-          value={cidade}
+          value={enderecoLocal?.Cidade}
           onChange={(event: any) => {
-            setCidade(event.target.value);
+            setEnderecoLocal({...enderecoLocal, Cidade: event.target.value});
           }}
         >
           {Locations.estados
-            .filter((estado) => estado.sigla === uf)[0]
+            .filter((estado) => estado.sigla === enderecoLocal?.Estado)[0]
             .cidades.map((item) => (
               <MenuItem value={item} key={item}>
                 {item}
               </MenuItem>
             ))}
         </Select>
-        <p>Contatos</p>
+        {/* <p>Contatos</p>
         <ReactInputMask
           mask="(99) 9999-9999"
           value={telFixo}
@@ -312,7 +287,7 @@ export const DadosPessoais = () => {
               {item.label}
             </MenuItem>
           ))}
-        </Select>
+        </Select> */}
       </div>
     </div>
   );

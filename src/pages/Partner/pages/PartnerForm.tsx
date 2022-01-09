@@ -15,6 +15,11 @@ import {
   participantActions,
   selectParticipant,
 } from "../../../reducers/participantReducer";
+import {
+  addressActions,
+  select as selectEnd,
+  selectAddress,
+} from "../../../reducers/addressReducer";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -30,19 +35,38 @@ const PartnerForm = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
   const participante = useSelector(selectParticipant);
+  const endereco = useSelector(selectAddress);
   const next = () => {
     if (currentTab === 0) {
-      if (participante.id) {
+      if (participante?.id) {
         dispatch(participantActions.update(participante));
-      } else {
-        dispatch(participantActions.create(participante));
+        if (endereco?.id) {
+          dispatch(addressActions.update(endereco));
+        } else {
+          dispatch(addressActions.create(endereco));
+        }
       }
+    } else {
+      dispatch(participantActions.create(participante));
     }
-
     setCurrentTab(currentTab === 3 ? 0 : currentTab + 1);
   };
 
-  const save = () => alert("carai beibe charque");
+  useEffect(() => {
+    if (participante?.id) {
+      if (endereco?.id) {
+        dispatch(addressActions.update(endereco));
+      } else {
+        dispatch(addressActions.create(endereco));
+      }
+    }
+  }, [participante?.id, endereco?.id]);
+
+    useEffect(() => {
+    dispatch(selectEnd(addressActions.findById(participante?.id)))
+  },[])
+
+  const save = () => alert("Registro Salvo");
 
   function a11yProps(index: any) {
     return {

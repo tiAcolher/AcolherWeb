@@ -2,13 +2,10 @@ import React from "react";
 import { makeStyles, TextField, Theme, createStyles } from "@material-ui/core";
 
 const FederatedForm = ({
-  setClube,
-  setModalidade,
-  setDataInicio,
+  partipanteLocal,
+  setParticipanteLocal,
   titulo,
-  clube,
-  modalidade,
-  dataInicio,
+
 }) => {
   const classes = useStyles();
 
@@ -19,26 +16,26 @@ const FederatedForm = ({
         className={classes.input}
         name="clube"
         label="Nome do Clube"
-        value={clube}
+        value={partipanteLocal.clube}
         onChange={(event: any) => {
-          setClube(event.target.value);
+          setParticipanteLocal({...partipanteLocal, clube: event.target.value});
         }}
       />
       <TextField
         className={classes.input}
-        value={modalidade}
+        value={partipanteLocal.modalidade}
         label="Modalidade Esportiva"
         onChange={(event: any) => {
-          setModalidade(event.target.value);
+          setParticipanteLocal({...partipanteLocal, modalidade: event.target.value});
         }}
       />
       <TextField
         className={classes.input}
-        value={dataInicio}
+        value={partipanteLocal.dataInicio}
         label="Data de Início"
         type="date"
         onChange={(event: any) => {
-          setDataInicio(event.target.value);
+          setParticipanteLocal({...partipanteLocal, dataInicio: event.target.value});
         }}
         InputLabelProps={{ shrink: true }}
       />

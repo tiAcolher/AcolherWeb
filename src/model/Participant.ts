@@ -1,6 +1,7 @@
 export type Participant = {
   id: number;
   nomeCompleto: string;
+  dtNascimento: Date;
   rg: string;
   cpf: string;
   telefone: string;
