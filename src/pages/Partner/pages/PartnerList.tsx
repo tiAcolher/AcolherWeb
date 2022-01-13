@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Main from "../../../components/Main";
 import {
   participantActions,
-  select,
+  setParticipantToStore,
   selectParticipantList,
 } from "../../../reducers/participantReducer";
 import { Participant } from "../../../model/Participant";
@@ -56,12 +56,12 @@ const PartnerList = (): JSX.Element => {
   }, [lista, search]);
 
   const handleEditPress = (participant: Participant) => {
-    dispatch(select(participant));
+    dispatch(setParticipantToStore(participant));
     history.push("createPartner");
   };
 
   const handleAddParticipant = () => {
-    dispatch(select(null));
+    dispatch(setParticipantToStore(null));
     history.push("createPartner");
   };
 

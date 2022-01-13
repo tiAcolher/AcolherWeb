@@ -106,7 +106,7 @@ export const domicilio = [
   { value: "Outros", label: "outros" },
 ];
 
-export const URL_BASE = "http://localhost:3001";
+export const URL_BASE = "http://localhost:3002";
 export const storageKeys = {
   USER: "user",
 };

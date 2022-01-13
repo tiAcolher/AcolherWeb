@@ -17,9 +17,10 @@ import {
 } from "../../../reducers/participantReducer";
 import {
   addressActions,
-  select as selectEnd,
   selectAddress,
 } from "../../../reducers/addressReducer";
+import { Participant } from "../../../model/Participant";
+import { Address } from "../../../model/Address";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -34,37 +35,31 @@ const PartnerForm = (): JSX.Element => {
   };
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
-  const participante = useSelector(selectParticipant);
-  const endereco = useSelector(selectAddress);
+  const participante: Partial<Participant> = useSelector(selectParticipant);
+  const endereco: Partial<Address> = useSelector(selectAddress);
+
+  useEffect(() => {
+    if (participante?.id) {
+      dispatch(addressActions.findById(participante?.id));
+    }
+  }, []);
+
   const next = () => {
     if (currentTab === 0) {
       if (participante?.id) {
-        dispatch(participantActions.update(participante));
-        if (endereco?.id) {
-          dispatch(addressActions.update(endereco));
-        } else {
-          dispatch(addressActions.create(endereco));
-        }
+        dispatch(
+          participantActions.update({
+            participant: participante,
+            dispatch,
+            address: endereco,
+          })
+        );
       }
     } else {
       dispatch(participantActions.create(participante));
     }
     setCurrentTab(currentTab === 3 ? 0 : currentTab + 1);
   };
-
-  useEffect(() => {
-    if (participante?.id) {
-      if (endereco?.id) {
-        dispatch(addressActions.update(endereco));
-      } else {
-        dispatch(addressActions.create(endereco));
-      }
-    }
-  }, [participante?.id, endereco?.id]);
-
-    useEffect(() => {
-    dispatch(selectEnd(addressActions.findById(participante?.id)))
-  },[])
 
   const save = () => alert("Registro Salvo");
 

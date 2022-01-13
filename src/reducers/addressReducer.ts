@@ -19,6 +19,7 @@ export const addressActions = {
   update: createAsyncThunk(
     "Address/update",
     async (address: Partial<Address>) => {
+      console.log("endereço sendo enviado:  ", JSON.stringify(address));
       const response = await addressAPI.update(address);
       return response;
     }
@@ -33,24 +34,27 @@ const AddressSlice = createSlice({
   name: "Address",
   initialState: {
     status: "",
-    endereco: {Cidade: Locations.estados[0].cidades[0], Estado: Locations.estados[0].sigla},
+    endereco: {
+      Cidade: Locations.estados[0].cidades[0],
+      Estado: Locations.estados[0].sigla,
+    },
     lista: [],
     mensagem: null,
   },
   reducers: {
-    select: (state, action) => {
-      const {payload} = action
+    setAddressToStore: (state, action) => {
       state = {
         ...state,
-        endereco:
-        {
-          ...payload,
+        endereco: {
+          ...action.payload,
           Cidade: state?.endereco?.Cidade || Locations.estados[0].cidades[0],
-          Estado: state?.endereco?.Estado || Locations.estados[0].sigla
-        }        
+          Estado: state?.endereco?.Estado || Locations.estados[0].sigla,
+        },
       };
-      console.log(JSON.stringify(state))
-    },  
+      console.log("=====================================");
+      console.log(action.payload);
+      console.log(state);
+    },
   },
   extraReducers: (builder) => {
     /** create */
@@ -72,7 +76,10 @@ const AddressSlice = createSlice({
     /** findById */
     builder.addCase(addressActions.findById.fulfilled, (state, action) => {
       state.status = "success";
-      state.endereco = action.payload;
+      if (action.payload) {
+        state.lista = action.payload;
+        state.endereco = action?.payload[0];
+      }
       return state;
     });
     builder.addCase(addressActions.findById.rejected, (state, action) => {
@@ -84,7 +91,7 @@ const AddressSlice = createSlice({
       state.status = "loading";
       return state;
     });
-   
+
     /** update */
     builder.addCase(addressActions.update.fulfilled, (state, action) => {
       state.status = "success";
@@ -101,8 +108,8 @@ const AddressSlice = createSlice({
   },
 });
 
-export const selectAddress = (state) => state.address.endereco;
-export const selectAddressList = (state) => state.address.lista;
+export const selectAddress = (state) => state?.address?.endereco;
+export const selectAddressList = (state) => state?.address?.lista;
 
 export default AddressSlice.reducer;
-export const { select } = AddressSlice.actions;
+export const { setAddressToStore } = AddressSlice.actions;

@@ -1,6 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
 import { participantAPI } from "../api/participant";
+import { Address } from "../model/Address";
 import { Participant } from "../model/Participant";
+import { addressActions, selectAddress } from "./addressReducer";
 
 export const participantActions = {
   create: createAsyncThunk(
@@ -18,10 +21,23 @@ export const participantActions = {
     const response = await participantAPI.findAll();
     return response;
   }),
+
   update: createAsyncThunk(
     "participant/update",
-    async (participant: Partial<Participant>) => {
+    async ({
+      participant,
+      dispatch,
+      address,
+    }: {
+      participant: Partial<Participant>;
+      dispatch: any;
+      address: Partial<Address>;
+    }) => {
       const response = await participantAPI.update(participant);
+
+      await dispatch(
+        addressActions.create({ ...address, idParticipante: response.id })
+      );
       return response;
     }
   ),
@@ -40,8 +56,9 @@ const participantSlice = createSlice({
     mensagem: null,
   },
   reducers: {
-    select: (state, action) => {
+    setParticipantToStore: (state, action) => {
       state.participante = action.payload;
+      console.log(action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -112,4 +129,4 @@ export const selectParticipant = (state) => state.participant.participante;
 export const selectParticipantList = (state) => state.participant.lista;
 
 export default participantSlice.reducer;
-export const { select } = participantSlice.actions;
+export const { setParticipantToStore } = participantSlice.actions;
