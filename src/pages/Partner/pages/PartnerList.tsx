@@ -45,15 +45,16 @@ const PartnerList = (): JSX.Element => {
   }, [listaParticipantes]);
 
   useEffect(() => {
-    if (search.length) {
-      let newList = lista.filter((item) =>
-        item.name.toUpperCase().includes(search.toUpperCase())
+    console.log(search.length);
+    if (search.length !== 0) {
+      let newList = lista.filter((item: Participant) =>
+        item.nomeCompleto.toUpperCase().includes(search.toUpperCase())
       );
       setLista(newList);
     } else {
-      setLista(lista);
+      setLista(listaParticipantes);
     }
-  }, [lista, search]);
+  }, [search]);
 
   const handleEditPress = (participant: Participant) => {
     dispatch(setParticipantToStore(participant));

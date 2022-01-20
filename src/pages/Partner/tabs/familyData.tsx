@@ -10,7 +10,6 @@ import {
   FormControlLabel,
   Select,
   MenuItem,
-  Button,
 } from "@material-ui/core";
 
 import { registroDeGuarda } from "../../../constants";
@@ -68,7 +67,6 @@ export const FamilyData = () => {
     } else {
       setFamilyMembers(familyMembers.slice(0, familyMembers.length - 1));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numeroDePessoasNaFamilia]);
 
   const showFamilyMember = () => {

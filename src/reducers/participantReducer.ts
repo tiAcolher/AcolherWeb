@@ -1,15 +1,32 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch, useSelector } from "react-redux";
 import { participantAPI } from "../api/participant";
 import { Address } from "../model/Address";
+import { Contact } from "../model/Contact";
 import { Participant } from "../model/Participant";
-import { addressActions, selectAddress } from "./addressReducer";
+import { addressActions } from "./addressReducer";
+import { contactActions } from "./contactReducer";
 
 export const participantActions = {
   create: createAsyncThunk(
     "participant/create",
-    async (participant: Partial<Participant>) => {
+    async ({
+      participant,
+      dispatch,
+      address,
+      contact,
+    }: {
+      participant: Partial<Participant>;
+      dispatch: any;
+      address: Partial<Address>;
+      contact: Partial<Contact>;
+    }) => {
       const response = await participantAPI.create(participant);
+      dispatch(
+        contactActions.create({ ...contact, idParticipante: response.id })
+      );
+      dispatch(
+        addressActions.create({ ...address, idParticipante: response.id })
+      );
       return response;
     }
   ),
@@ -28,16 +45,19 @@ export const participantActions = {
       participant,
       dispatch,
       address,
+      contact,
     }: {
       participant: Partial<Participant>;
       dispatch: any;
       address: Partial<Address>;
+      contact: Partial<Contact>;
     }) => {
       const response = await participantAPI.update(participant);
 
-      await dispatch(
-        addressActions.create({ ...address, idParticipante: response.id })
-      );
+      dispatch(contactActions.update(contact));
+
+      dispatch(addressActions.update(address));
+
       return response;
     }
   ),
@@ -51,14 +71,18 @@ const participantSlice = createSlice({
   name: "participant",
   initialState: {
     status: "",
-    participante: null,
+    participante: {
+      federado: false,
+    },
     lista: [],
     mensagem: null,
   },
   reducers: {
     setParticipantToStore: (state, action) => {
-      state.participante = action.payload;
-      console.log(action.payload);
+      state.participante = {
+        ...action.payload,
+        federado: false,
+      };
     },
   },
   extraReducers: (builder) => {

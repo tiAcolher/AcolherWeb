@@ -5,7 +5,7 @@ export const schoolDataAPI = {
   create: (data: Partial<SchoolData>) => {
     return client({ method: "post", url: "/schoolData", data });
   },
-  read: (id: number) => {
+  findById: (id: number) => {
     return client({
       method: "get",
       url: `/schoolData/${id}`,

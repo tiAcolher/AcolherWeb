@@ -5,7 +5,7 @@ export const contactAPI = {
   create: (data: Partial<Contact>) => {
     return client({ method: "post", url: "/contact", data });
   },
-  read: (id: number) => {
+  findById: (id: number) => {
     return client({ method: "get", url: `/contact/${id}` });
   },
   update: (data: Partial<Contact>) => {

@@ -5,7 +5,7 @@ export const familyDataAPI = {
   create: (data: Partial<FamilyData>) => {
     return client({ method: "post", url: "/familyData", data });
   },
-  read: (id: number) => {
+  findById: (id: number) => {
     return client({
       method: "get",
       url: `/familyData/${id}`,

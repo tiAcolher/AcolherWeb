@@ -5,7 +5,7 @@ export const healthAPI = {
   create: (data: Partial<Health>) => {
     return client({ method: "post", url: "/health", data });
   },
-  read: (id: number) => {
+  findById: (id: number) => {
     return client({ method: "get", url: `/health/${id}` });
   },
   update: (data: Partial<Health>) => {

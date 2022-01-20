@@ -15,12 +15,6 @@ export const addressAPI = {
       url: `/address/${id}`,
     });
   },
-  findAll: () => {
-    return client({
-      method: "get",
-      url: `/address`,
-    });
-  },
   update: (data: Partial<Address>) => {
     return client({
       method: "put",

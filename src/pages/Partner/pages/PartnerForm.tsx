@@ -11,6 +11,7 @@ import Main from "../../../components/Main";
 import TabPanel from "../components/tabPanel";
 import { ArrowForward, Check } from "@material-ui/icons";
 import { Fab } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import {
   participantActions,
   selectParticipant,
@@ -21,6 +22,11 @@ import {
 } from "../../../reducers/addressReducer";
 import { Participant } from "../../../model/Participant";
 import { Address } from "../../../model/Address";
+import {
+  contactActions,
+  selectContact,
+} from "../../../reducers/contactReducer";
+import { Contact } from "../../../model/Contact";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -37,10 +43,12 @@ const PartnerForm = (): JSX.Element => {
   const dispatch = useDispatch();
   const participante: Partial<Participant> = useSelector(selectParticipant);
   const endereco: Partial<Address> = useSelector(selectAddress);
+  const contato: Partial<Contact> = useSelector(selectContact);
 
   useEffect(() => {
     if (participante?.id) {
       dispatch(addressActions.findById(participante?.id));
+      dispatch(contactActions.findById(participante?.id));
     }
   }, []);
 
@@ -52,16 +60,29 @@ const PartnerForm = (): JSX.Element => {
             participant: participante,
             dispatch,
             address: endereco,
+            contact: contato,
+          })
+        );
+      } else {
+        dispatch(
+          participantActions.create({
+            participant: participante,
+            dispatch,
+            address: endereco,
+            contact: contato,
           })
         );
       }
-    } else {
-      dispatch(participantActions.create(participante));
     }
     setCurrentTab(currentTab === 3 ? 0 : currentTab + 1);
   };
 
-  const save = () => alert("Registro Salvo");
+  const history = useHistory();
+
+  const save = () => {
+    history.push("/partnerList");
+    alert("Registro Salvo");
+  };
 
   function a11yProps(index: any) {
     return {

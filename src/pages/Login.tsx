@@ -44,6 +44,7 @@ export default function Login() {
 
     if (selector) {
       setErro(false);
+      localStorage.setItem("ac-credentials", JSON.stringify(selector));
       history.push("/home");
     } else {
       setErro(true);

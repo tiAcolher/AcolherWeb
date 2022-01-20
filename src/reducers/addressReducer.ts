@@ -15,11 +15,9 @@ export const addressActions = {
     const response = await addressAPI.findById(id);
     return response;
   }),
-
   update: createAsyncThunk(
     "Address/update",
     async (address: Partial<Address>) => {
-      console.log("endereço sendo enviado:  ", JSON.stringify(address));
       const response = await addressAPI.update(address);
       return response;
     }
@@ -47,13 +45,9 @@ const AddressSlice = createSlice({
         ...state,
         endereco: {
           ...action.payload,
-          Cidade: state?.endereco?.Cidade || Locations.estados[0].cidades[0],
-          Estado: state?.endereco?.Estado || Locations.estados[0].sigla,
         },
       };
-      console.log("=====================================");
-      console.log(action.payload);
-      console.log(state);
+      return state;
     },
   },
   extraReducers: (builder) => {
@@ -79,6 +73,9 @@ const AddressSlice = createSlice({
       if (action.payload) {
         state.lista = action.payload;
         state.endereco = action?.payload[0];
+      } else {
+        state.lista = null;
+        state.endereco = null;
       }
       return state;
     });
