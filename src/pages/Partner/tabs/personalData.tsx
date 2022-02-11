@@ -46,21 +46,39 @@ export const DadosPessoais = () => {
 
   const dispatch = useDispatch();
 
+  const [cidades, setCidades] = useState(Locations.estados[0].cidades);
+
   useEffect(() => {
     dispatch(setParticipantToStore(participanteLocal));
   }, [participanteLocal]);
 
   useEffect(() => {
-    if (enderecoLocal.Logradouro) {
+    if (enderecoLocal?.Logradouro) {
       dispatch(setAddressToStore(enderecoLocal));
     }
   }, [enderecoLocal]);
 
   useEffect(() => {
-    if (contatoLocal.TelefoneFixo) {
+    if (contatoLocal?.id) {
       dispatch(setContactToStore(contatoLocal));
     }
   }, [contatoLocal]);
+
+  useEffect(() => {
+    if (enderecoLocal?.Estado) {
+      setCidades(
+        Locations.estados.filter(
+          (estado) => estado.sigla === enderecoLocal?.Estado
+        )[0].cidades
+      );
+    } else if (endereco?.Estado) {
+      setCidades(
+        Locations.estados.filter(
+          (estado) => estado.sigla === endereco?.Estado
+        )[0].cidades
+      );
+    }
+  }, [enderecoLocal, endereco]);
 
   return (
     <div className={classes.container}>
@@ -249,13 +267,11 @@ export const DadosPessoais = () => {
             });
           }}
         >
-          {Locations.estados
-            .filter((estado) => estado.sigla === enderecoLocal?.Estado)[0]
-            .cidades.map((item) => (
-              <MenuItem value={item} key={item}>
-                {item}
-              </MenuItem>
-            ))}
+          {cidades.map((item) => (
+            <MenuItem value={item} key={item}>
+              {item}
+            </MenuItem>
+          ))}
         </Select>
 
         <p>Contatos</p>
