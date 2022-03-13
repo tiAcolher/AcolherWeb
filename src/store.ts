@@ -3,6 +3,7 @@ import participantReducer from "./reducers/participantReducer";
 import addressReducer from "./reducers/addressReducer";
 import userReducer from "./reducers/userReducer";
 import contactReducer from "./reducers/contactReducer";
+import schoolDataReducer from "./reducers/schoolDataReducer";
 
 export default configureStore({
   reducer: {
@@ -14,7 +15,6 @@ export default configureStore({
     // familyData: familyDataReducer,
     // familyMembers: familyMembersReducer,
     // health: healthReducer,
-
-    // school: schoolReducer,
+    schoolData: schoolDataReducer,
   },
 });

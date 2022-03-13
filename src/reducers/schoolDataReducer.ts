@@ -75,8 +75,15 @@ const SchoolDataSlice = createSlice({
         });
         /**update */
         builder.addCase(schoolDataActions.update.fulfilled, (state, action) => {
+            console.log('sucessage')
             state.status = "success";
             state.dadosEscolares = action.payload;
+            return state;
+        });
+        builder.addCase(schoolDataActions.update.rejected, (state, action) => {
+            console.log('failure')
+            state.status = "failed";
+            state.dadosEscolares = null;
             return state;
         });
         /**delete */
@@ -89,7 +96,6 @@ const SchoolDataSlice = createSlice({
 });
 
 export const selectSchoolData = (state) => state?.schoolData?.dadosEscolares;
-export const selectSchoolDataList = (state) => state?.schoolData?.lista;
 
 export default SchoolDataSlice.reducer;
 export const { setSchoolDataToStore } = SchoolDataSlice.actions;

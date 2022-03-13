@@ -61,18 +61,25 @@ export const participantActions = {
       contact: Partial<Contact>;
       schoolData: Partial<SchoolData>;
     }) => {
-      const response = await participantAPI.update({ ...participant, dtNascimento: new Date(participant.dtNascimento), dataInicioFederado: new Date(participant.dataInicioFederado) });
+      const response = await participantAPI.update({ ...participant, dtNascimento: participant.dtNascimento, dataInicioFederado: new Date(participant.dataInicioFederado) });
 
-      dispatch(contactActions.update(contact));
+      if (!contact.id) {
+        dispatch(contactActions.create({ ...contact, idParticipante: participant.id }))
+      } else {
+        dispatch(contactActions.update(contact));
+      }
 
-      dispatch(addressActions.update(address));
-
+      if (!address.id) {
+        dispatch(addressActions.create({ ...address, idParticipante: participant.id }));
+      } else {
+        dispatch(addressActions.update(address));
+      }
+      console.log('alá que safadin...\n\t', schoolData)
       if (!schoolData.id) {
         dispatch(schoolDataActions.create({ ...schoolData, idParticipante: participant.id }));
       } else {
         dispatch(schoolDataActions.update(schoolData));
       }
-
 
       return response;
     }

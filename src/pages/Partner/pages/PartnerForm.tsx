@@ -55,14 +55,13 @@ const PartnerForm = (): JSX.Element => {
     if (participante?.id) {
       dispatch(addressActions.findById(participante?.id));
       dispatch(contactActions.findById(participante?.id));
-      // dispatch(schoolDataActions.findById(participante?.id));
+      dispatch(schoolDataActions.findById(participante?.id));
     }
   }, []);
 
   const next = () => {
     if (currentTab === 0) {
       if (participante?.id) {
-        console.log(participante.federado);
         dispatch(
           participantActions.update({
             participant: participante,
