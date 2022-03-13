@@ -4,7 +4,7 @@ const errorHandler = (error, handleError) => {
   }
 
   if (error.response && error.response.status === 401) {
-    alert(String(error.response.data.mensagem));
+    alert(String(error.response.message));
   }
 
   return Promise.reject(error);

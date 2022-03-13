@@ -1,27 +1,29 @@
+export const DATE_FORMAT = "DD/MM/YYYY";
+
 export const escolaridade = [
-  { value: "1", label: "Ensino Fundamental" },
-  { value: "2", label: "Ensino Médio" },
+  "Ensino Fundamental",
+  "Ensino Médio",
 ];
 
 export const turnos = [
-  { value: "1", label: "Manhã" },
-  { value: "2", label: "Tarde" },
-  { value: "3", label: "Noite" },
+  "Manhã",
+  "Tarde",
+  "Noite",
 ];
 
 export const series = [
-  { value: "1", label: "1º Ano" },
-  { value: "2", label: "2º Ano" },
-  { value: "3", label: "3º Ano" },
-  { value: "4", label: "4º Ano" },
-  { value: "5", label: "5º Ano" },
-  { value: "6", label: "6º Ano" },
-  { value: "7", label: "7º Ano" },
-  { value: "8", label: "8º Ano" },
-  { value: "9", label: "9º Ano" },
-  { value: "10", label: "1º Ano do Ensino Médio" },
-  { value: "11", label: "2º Ano do Ensino Médio" },
-  { value: "12", label: "3º Ano do Ensino Médio" },
+  "1º Ano",
+  "2º Ano",
+  "3º Ano",
+  "4º Ano",
+  "5º Ano",
+  "6º Ano",
+  "7º Ano",
+  "8º Ano",
+  "9º Ano",
+  "1º Ano do Ensino Médio",
+  "2º Ano do Ensino Médio",
+  "3º Ano do Ensino Médio",
 ];
 
 export const situacoes = [

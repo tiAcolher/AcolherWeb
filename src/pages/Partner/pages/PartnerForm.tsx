@@ -27,6 +27,11 @@ import {
   selectContact,
 } from "../../../reducers/contactReducer";
 import { Contact } from "../../../model/Contact";
+import {
+  schoolDataActions,
+  selectSchoolData,
+} from "../../../reducers/schoolDataReducer";
+import { SchoolData } from "../../../model/SchoolData";
 
 const useStyles = makeStyles((theme: Theme) => ({
   tabs: {
@@ -44,23 +49,27 @@ const PartnerForm = (): JSX.Element => {
   const participante: Partial<Participant> = useSelector(selectParticipant);
   const endereco: Partial<Address> = useSelector(selectAddress);
   const contato: Partial<Contact> = useSelector(selectContact);
+  const dadosEscolares: Partial<SchoolData> = useSelector(selectSchoolData);
 
   useEffect(() => {
     if (participante?.id) {
       dispatch(addressActions.findById(participante?.id));
       dispatch(contactActions.findById(participante?.id));
+      // dispatch(schoolDataActions.findById(participante?.id));
     }
   }, []);
 
   const next = () => {
     if (currentTab === 0) {
       if (participante?.id) {
+        console.log(participante.federado);
         dispatch(
           participantActions.update({
             participant: participante,
             dispatch,
             address: endereco,
             contact: contato,
+            schoolData: dadosEscolares,
           })
         );
       } else {
@@ -70,6 +79,7 @@ const PartnerForm = (): JSX.Element => {
             dispatch,
             address: endereco,
             contact: contato,
+            schoolData: dadosEscolares,
           })
         );
       }
@@ -81,7 +91,6 @@ const PartnerForm = (): JSX.Element => {
 
   const save = () => {
     history.push("/partnerList");
-    alert("Registro Salvo");
   };
 
   function a11yProps(index: any) {

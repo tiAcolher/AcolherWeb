@@ -33,20 +33,41 @@ import {
   setContactToStore,
 } from "../../../reducers/contactReducer";
 import { Contact } from "../../../model/Contact";
+import { DatePicker } from "@material-ui/pickers";
+import moment from "moment";
+import { DATE_FORMAT, escolaridade, series, turnos } from "../../../constants";
+import {
+  selectSchoolData,
+  setSchoolDataToStore,
+} from "../../../reducers/schoolDataReducer";
+import { SchoolData } from "../../../model/SchoolData";
 
 export const DadosPessoais = () => {
   const classes = useStyles();
+
   const participante: Partial<Participant> = useSelector(selectParticipant);
   const endereco: Partial<Address> = useSelector(selectAddress);
   const contato: Partial<Contact> = useSelector(selectContact);
+  const schoolData: Partial<SchoolData> = useSelector(selectSchoolData);
 
   const [participanteLocal, setParticipanteLocal] = useState(participante);
   const [enderecoLocal, setEnderecoLocal] = useState(endereco);
   const [contatoLocal, setContatoLocal] = useState(contato);
+  const [schoolDataLocal, setSchoolDataLocal] = useState(schoolData);
+  const [cidades, setCidades] = useState(Locations.estados[0].cidades);
+
+  const [dtNascimento, setDtNascimento] = useState(
+    moment(participanteLocal?.dtNascimento || new Date())
+  );
 
   const dispatch = useDispatch();
 
-  const [cidades, setCidades] = useState(Locations.estados[0].cidades);
+  useEffect(() => {
+    setParticipanteLocal({
+      ...participanteLocal,
+      dtNascimento: dtNascimento.format(DATE_FORMAT),
+    });
+  }, [dtNascimento]);
 
   useEffect(() => {
     dispatch(setParticipantToStore(participanteLocal));
@@ -79,6 +100,17 @@ export const DadosPessoais = () => {
       );
     }
   }, [enderecoLocal, endereco]);
+
+  useEffect(() => {
+    if (participanteLocal?.id) {
+      dispatch(
+        setSchoolDataToStore({
+          ...schoolDataLocal,
+          idParticipante: participanteLocal.id,
+        })
+      );
+    }
+  }, [schoolDataLocal]);
 
   return (
     <div className={classes.container}>
@@ -133,18 +165,14 @@ export const DadosPessoais = () => {
             label="Outro"
           />
         </RadioGroup>
-        <TextField
-          type="date"
-          label="Data de Nascimento"
+        <DatePicker
           className={classes.input}
-          InputLabelProps={{ shrink: true }}
-          value={participanteLocal?.dtNascimento}
-          onChange={(event: any) => {
-            setParticipanteLocal({
-              ...participanteLocal,
-              dtNascimento: event.target.value,
-            });
-          }}
+          clearable
+          value={dtNascimento}
+          onChange={setDtNascimento}
+          placeholder="Data de nascimento"
+          maxDate={new Date()}
+          format={DATE_FORMAT}
         />
         <TextField
           className={classes.input}
@@ -174,21 +202,21 @@ export const DadosPessoais = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={participanteLocal?.federado || false}
-              onClick={() =>
+              onChange={(event) => {
                 setParticipanteLocal({
                   ...participanteLocal,
-                  federado: !participanteLocal.federado,
-                })
-              }
+                  federado: event.target.checked,
+                });
+              }}
             />
           }
+          checked={participanteLocal.federado}
           label="Atleta Federado"
         />
         {participanteLocal.federado && (
           <FederatedForm
             titulo="Dados Federado"
-            partipanteLocal={participanteLocal}
+            participanteLocal={participanteLocal}
             setParticipanteLocal={setParticipanteLocal}
           />
         )}
@@ -310,32 +338,32 @@ export const DadosPessoais = () => {
           className={classes.input}
           label="Email"
         />
-        {/*<p>Dados Escolares</p>
+        <p>Dados Escolares</p>
         <TextField
           className={classes.input}
           label="Nome da Escola"
-          value={participanteLocal.escola}
+          value={schoolDataLocal?.NomeEscola}
           onChange={(event: any) => {
-            setParticipanteLocal({
-              ...participanteLocal,
-              escola: event.target.value,
+            setSchoolDataLocal({
+              ...schoolDataLocal,
+              NomeEscola: event.target.value,
             });
           }}
         />
-         <FormLabel className={classes.label}>Escolaridade</FormLabel>
+        <FormLabel className={classes.label}>Escolaridade</FormLabel>
         <Select
           className={classes.input}
-          value={participanteLocal.escolaridade}
+          value={schoolDataLocal?.Escolaridade}
           onChange={(event: any) => {
-            setParticipanteLocal({
-              ...participanteLocal,
-              escolaridade: event.target.value,
+            setSchoolDataLocal({
+              ...schoolDataLocal,
+              Escolaridade: event.target.value,
             });
           }}
         >
-          {escolaridadeArray.map((item) => (
-            <MenuItem value={item.value} key={item.value}>
-              {item.label}
+          {escolaridade.map((item) => (
+            <MenuItem value={item} key={item}>
+              {item}
             </MenuItem>
           ))}
         </Select>
@@ -344,17 +372,17 @@ export const DadosPessoais = () => {
           className={classes.input}
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={participanteLocal.turno}
+          value={schoolDataLocal?.Turno}
           onChange={(event: any) => {
-            setParticipanteLocal({
-              ...participanteLocal,
-              turno: event.target.value,
+            setSchoolDataLocal({
+              ...schoolDataLocal,
+              Turno: event.target.value,
             });
           }}
         >
           {turnos.map((item) => (
-            <MenuItem value={item.value} key={item.value}>
-              {item.label}
+            <MenuItem value={item} key={item}>
+              {item}
             </MenuItem>
           ))}
         </Select>
@@ -363,20 +391,20 @@ export const DadosPessoais = () => {
           className={classes.input}
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
-          value={participanteLocal.serie}
+          value={schoolDataLocal?.serie}
           onChange={(event: any) => {
-            setParticipanteLocal({
-              ...participanteLocal,
+            setSchoolDataLocal({
+              ...schoolDataLocal,
               serie: event.target.value,
             });
           }}
         >
           {series.map((item) => (
-            <MenuItem value={item.value} key={item.value}>
-              {item.label}
+            <MenuItem value={item} key={item}>
+              {item}
             </MenuItem>
           ))}
-        </Select> */}
+        </Select>
       </div>
     </div>
   );

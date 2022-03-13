@@ -3,8 +3,10 @@ import { participantAPI } from "../api/participant";
 import { Address } from "../model/Address";
 import { Contact } from "../model/Contact";
 import { Participant } from "../model/Participant";
+import { SchoolData } from "../model/SchoolData";
 import { addressActions } from "./addressReducer";
 import { contactActions } from "./contactReducer";
+import { schoolDataActions } from "./schoolDataReducer";
 
 export const participantActions = {
   create: createAsyncThunk(
@@ -14,11 +16,13 @@ export const participantActions = {
       dispatch,
       address,
       contact,
+      schoolData,
     }: {
       participant: Partial<Participant>;
       dispatch: any;
       address: Partial<Address>;
       contact: Partial<Contact>;
+      schoolData: Partial<SchoolData>
     }) => {
       const response = await participantAPI.create(participant);
       dispatch(
@@ -26,6 +30,9 @@ export const participantActions = {
       );
       dispatch(
         addressActions.create({ ...address, idParticipante: response.id })
+      );
+      dispatch(
+        schoolDataActions.create({ ...schoolData, idParticipante: response.id })
       );
       return response;
     }
@@ -46,17 +53,26 @@ export const participantActions = {
       dispatch,
       address,
       contact,
+      schoolData
     }: {
       participant: Partial<Participant>;
       dispatch: any;
       address: Partial<Address>;
       contact: Partial<Contact>;
+      schoolData: Partial<SchoolData>;
     }) => {
-      const response = await participantAPI.update(participant);
+      const response = await participantAPI.update({ ...participant, dtNascimento: new Date(participant.dtNascimento), dataInicioFederado: new Date(participant.dataInicioFederado) });
 
       dispatch(contactActions.update(contact));
 
       dispatch(addressActions.update(address));
+
+      if (!schoolData.id) {
+        dispatch(schoolDataActions.create({ ...schoolData, idParticipante: participant.id }));
+      } else {
+        dispatch(schoolDataActions.update(schoolData));
+      }
+
 
       return response;
     }

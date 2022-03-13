@@ -1,7 +1,7 @@
 export type Participant = {
   id: number;
   nomeCompleto: string;
-  dtNascimento: Date;
+  dtNascimento: string | Date;
   rg: string;
   cpf: string;
   telefone: string;
@@ -13,17 +13,13 @@ export type Participant = {
   federado: boolean;
   clube: string;
   modalidade: string;
-  dataInicioFederado: Date;
+  dataInicioFederado: string | Date;
   logradouro: string;
   numeroEndereco: string;
   cep: string;
   estado: string;
   cidade: string;
   complemento: string;
-  escola: string;
-  escolaridade: string;
-  turno: string;
-  serie: string;
   tipoSanguineo: string;
   alergias: string;
   enfermidade: string;
